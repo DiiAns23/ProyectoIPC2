@@ -1,0 +1,106 @@
+﻿.black {
+    background:linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(69,69,69,1) 52%, rgba(0,0,0,1) 97%);
+    font: white;
+    font-family: times;
+}
+.blue {
+    background:linear-gradient(270deg, rgba(6,22,71,1) 0%, rgba(29,23,152,1) 52%, rgba(5,11,39,1) 97%);
+    font: white;
+    font-family: times;
+}
+.gris {
+    background: gray;
+}
+.tipo-letra {
+    font-family: times;
+}
+.letra-negra {
+    color: black;
+}
+.verdecitochido {
+    background: rgb(64,191,51);
+    font: white;
+}
+.green2 {
+    background: linear-gradient(270deg, rgba(8,34,9,1) 0%, rgba(25,143,13,1) 52%, rgba(8,34,9,1) 97%);
+    font: white;
+}
+.coffe {
+    background: linear-gradient(270deg, rgba(100,0,0,1) 0%, rgba(54,25,12,1) 52%, rgba(100,0,0,1) 97%);
+    font: white;
+    font-family: times;
+}
+.borde-amarillo2 {
+    border-top-width: 5px;
+    border-top-color: rgb(221,221,35);
+}
+
+.boton-borde {
+    border-bottom-width: 3px;
+    border-bottom-color: black;
+}
+.boton-atras {
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    line-height: 32px;
+    text-transform: uppercase;
+    float: left;
+}
+.fichas {
+    width: 48px;
+    height: 48px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    float: left;
+}
+.white {
+    background-color: white;
+}
+.black {
+    background-color: black;
+}
+
+.margen-superior {
+    border-top-width: 30px;
+}
+
+#tablero {
+    background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(69,69,69,1) 52%, rgba(0,0,0,1) 97%);
+    position: relative;
+    top: 10px;
+    left: 40px;
+    width: 500px;
+    height: 500px;
+}
+.casilla {
+    width: 50px;
+    height: 50px;
+    float: left;
+    font-size: 3em;
+    text-align: center;
+    color: white;
+    font-family: times;
+    border: black 0.5px solid;
+}
+#tablero2 {
+    border-radius: 10px;
+    background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(69,69,69,1) 52%, rgba(0,0,0,1) 97%);
+    position: relative;
+    top: 100px;
+    left: 800px;
+    width: 500px;
+    height: 400px;
+}
+
+.active{
+    background:red;
+}
+
+button.btn:active{
+    background:red;
+}

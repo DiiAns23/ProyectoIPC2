@@ -1,0 +1,105 @@
+﻿@model List<Repetido.Models.Modelos.PartidaIndividual>
+@{
+    Layout = null;
+    string title = (string)TempData["title"];
+    string filename = (string)TempData["file"];
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/MyStyles2.css" />
+    <link rel="stylesheet" href="~/Content/MyStyles.css" />
+
+    <title>@title</title>
+</head>
+<body background="/Public/Image/P.jpg">
+    <div>@filename</div>
+    <div>
+        <main class="col align-content-center" id="tablero">
+            @using (Html.BeginForm("Change", "PantallaPrincipal"))
+            {
+                int numero = 0;
+                string[] letras = { " ", "A", "B", "C", "D", "E", "F", "G", "H", " " };
+                <div class="fila font-weight-bold">
+                    @for (int i = 0; i < letras.Length; i++)
+                    {
+                        <div class="casilla border-0">@letras[i]</div>
+                    }
+                </div>
+                for (int i = 0; i < 8; i++)
+                {
+                    var id2 = i + 1;
+                    <div class="fila font-weight-bold">
+                        <div class="casilla border-0">@id2</div>
+                        @for (int j = 0; j < 8; j++)
+                        {
+                            if (Model[numero].Color.Equals("black"))
+                            {
+                                <div class="casilla verdecitochido">
+                                    <button class="fichas black" type="submit" value="-1" name="io">
+                                    </button>
+                                </div>
+
+                            }
+                            else if (Model[numero].Color == "white")
+                            {
+                                <div class="casilla verdecitochido">
+                                    <button class="fichas white" type="submit" value="-1" name="io">
+                                    </button>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="casilla verdecitochido">
+                                    <button class="verdecitochido fichas" type="submit" value="@numero" name="io">
+                                    </button>
+                                </div>
+                            }
+                            numero++;
+                        }
+                        <div class="casilla border-0">@id2</div>
+                    </div>
+                }
+                <div class="fila font-weight-bold">
+                    @for (int i = 0; i < letras.Length; i++)
+                    {
+                        <div class="casilla border-0">@letras[i]</div>
+                    }
+                </div>
+
+            }
+        </main>
+
+        @using (Html.BeginForm(actionName: "Upload", controllerName: "PantallaPrincipal",
+            FormMethod.Post,
+            htmlAttributes: new { enctype = "multipart/form-data" }))
+        {
+            <input type="file" name="doc" accept=".xml" />
+            <button>Cargar</button>
+        }
+    </div>
+
+    <nav class="container">
+        <br />
+        <footer>
+            <nav class="row-cols-md-6 navbar navbar-default navbar-fixed-bottom navbar-inverse green2 font-monospace borde-amarillo2">
+                <div class="container-fluid navbar-left">
+                    <h1 class="float-left tipo-letra text-white">OTHELLO</h1>
+                </div>
+                <div class="container-fluid">
+                    <p></p>
+                </div>
+                <div class="container-fluid">
+                    <p></p>
+                </div>
+                <div class="container-fluid">
+                    <p></p>
+                </div>
+            </nav>
+        </footer>
+    </nav>
+</body>
+</html>

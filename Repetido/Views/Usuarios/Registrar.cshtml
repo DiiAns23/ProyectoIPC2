@@ -1,0 +1,52 @@
+﻿@model Repetido.Models.Modelos.RegistrarViewModel
+@{
+    ViewBag.Title = "Registrar";
+}
+@section Image{
+    '/Public/Image/PP.jpg'
+}
+
+@using (Html.BeginForm("Registrar", "Usuarios", FormMethod.Post))
+{
+    <div class="row align-content-center justify-content-center" style="height:95vh">
+        <div class="col col-md-4">
+            <div class="card font-weight-bold">
+                <div class="card-header text-white text-center borde-amarillo green2">
+                    <p class="h4 letra">FORMULARIO DE ENVIO </p>
+                </div>
+                <div class="card-body gris">
+                    @Html.LabelFor(dato => dato.nombre, "Nombre")
+                    @Html.TextBoxFor(dato => dato.nombre, "", new { @class = "form-control" })
+                    @Html.LabelFor(dato => dato.Apellido, "Apellido")
+                    @Html.TextBoxFor(dato => dato.Apellido, "", new { @class = "form-control" })
+                    @Html.LabelFor(dato => dato.Usuario, "Usuario")
+                    @Html.TextBoxFor(dato => dato.Usuario, "", new { @class = "form-control" })
+                    @Html.LabelFor(dato => dato.Correo_electronico, "Correo Electronico")
+                    @Html.TextBoxFor(dato => dato.Correo_electronico, "", new { @class = "form-control", @type = "email" })
+                    @Html.LabelFor(dato => dato.contaseña, "Contraseña")
+                    @Html.TextBoxFor(dato => dato.contaseña, "", new { @class = "form-control", @type = "password" })
+                    @Html.LabelFor(dato => dato.recontaseña, "Confirmar Contraseña")
+                    @Html.TextBoxFor(dato => dato.recontaseña, "", new { @class = "form-control", @type = "password" })
+                    @Html.LabelFor(dato => dato.fecha_nacimiento, "Fecha de Nacimiento")
+                    @Html.TextBoxFor(dato => dato.fecha_nacimiento, "", new { @class = "form-control", @type = "date" })
+                    @Html.LabelFor(dato => dato.codigo_pais, "País")
+                    <select class="form-control" data-val="true" data-val-number="El campo Codigo_Pais debe ser un número." data-val-required="El campo Codigo_Pais es obligatorio." id="Codigo_Pais" name="Codigo_Pais">
+                        <option value="">Seleccione uno</option>
+                        @foreach (var pais in ViewBag.Paises)
+                        {   
+                            <option value="@pais.codigo">@pais.nombre | @pais.abrev  </option>
+                        }
+                    </select>
+                    <div class="row mt-2">
+                        <div class="col col-md-6">
+                            <input type="submit" value="Aceptar" class="btn btn-block black letra font-monospace text-white"/>
+                        </div>
+                        <div class="col col-md-6">
+                            <a href="~/Login/Login" class="btn btn-block red font-monospace letra text-white">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

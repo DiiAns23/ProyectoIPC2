@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "PantallaPrincipal";
+}
+@section Image{
+    '/Public/Image/PP.jpg'
+    }
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/MyStyles.css" />
+    <link rel="stylesheet" href="~/Content/MyStyles2.css" />
+
+</head>
+<body>
+    <header>
+        <div class="btn navbar float-right letra-negra align-content-lg-center">
+            @if (User.Identity.IsAuthenticated)
+             {
+                <a href="/Login/Logout" class="btn btn-block  red redondear btn-outline-warning">Cerrar Sesion</a>
+            }
+        </div>
+    </header>
+    <header>
+        <div class="row align-content-lg-center justify-content-center" style="height:75vh">
+            <div class="col col-sm-4">
+                <br />
+                <div>
+                    <a href="~/PantallaPrincipal/Jugar" class="btn btn-block blue redondear btn-outline-warning"><h2 class="text-white align-content-center ">JUGAR</h2></a>
+                </div>
+                <br />
+                <div>
+                    <a href="~/PantallaPrincipal/Torneo" class="btn btn-block red redondear btn-outline-warning" style="font-family: times"><h2 class="text-white align-content-center ">TORNEOS</h2></a>
+                </div>
+                <br />
+                <div>
+                    <a href="~/PantallaPrincipal/Historial" class="btn btn-block black redondear btn-outline-warning"><h2 class="text-white align-content-center ">HISTORIAL</h2></a>
+                </div>
+                <br />
+            </div>
+        </div>
+    </header>
+    <nav class="container">
+        <br />
+        <footer>
+            <nav class="row-cols-3 navbar navbar-default navbar-fixed-bottom navbar-inverse green2 font-monospace borde-amarillo2">
+                <div class="container-fluid navbar-left">
+                    <hr />
+                    <h1 class="tipo-letra text-white float-left">OTHELLO</h1>
+                    <hr />
+                </div>
+                <div class="container-fluid">
+                    <h2 class="text-white text-white tipo-letra text-center">MENU PRINCIPAL</h2>
+                </div>
+                <div>
+                    <p></p>
+                </div>
+            </nav>
+        </footer>
+    </nav>
+
+</body>

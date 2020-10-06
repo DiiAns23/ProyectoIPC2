@@ -1,0 +1,46 @@
+﻿gradient1:hover {
+    background: linear-gradient(180deg, #fbde74 0%, #ff9900 100%);
+    transition: all .3s;
+}
+
+.borde-amarillo {
+    border-bottom-width: 5px;
+    border-bottom-color: rgb(221,221,35);
+}
+
+.green {
+    background: rgb(36,36,36);
+    font: white;
+}
+
+.gray {
+    background: rgb(36,36,36);
+    font: white;
+}
+
+.red {
+    background: linear-gradient(270deg, rgba(152,17,17,1) 0%, rgba(187,22,22,1) 52%, rgba(236,6,6,1) 97%);
+    font: white;
+    font-family: times;
+}
+
+.letra {
+    font-family: Copperplate,Copperplate Gothic Light,fantasy;
+}
+
+.redondear {
+    border-radius: 100px;
+}
+
+.borde {
+    border-bottom-width: 10px;
+}
+
+.transparent {
+    background-color: rgba(0,0,0,0.15);
+}
+
+.panel {
+    background-color: transparent;
+    border: 1px #222;
+}

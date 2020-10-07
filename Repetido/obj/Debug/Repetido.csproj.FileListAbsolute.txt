@@ -134,8 +134,8 @@ C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\bin\es\S
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\bin\es\System.Web.WebPages.resources.dll
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.csprojAssemblyReference.cache
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.csproj.CoreCompileInputs.cache
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.csproj.CopyComplete
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.dll
 C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.pdb
+C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\obj\Debug\Repetido.csprojAssemblyReference.cache

@@ -1,8 +1,10 @@
 ﻿@model List<Repetido.Models.Modelos.PartidaIndividual>
 @{
-    Layout = null;
     string title = (string)TempData["title"];
     string filename = (string)TempData["file"];
+}
+@section Image{
+    '/Public/Image/P.jpg'
 }
 <!DOCTYPE html>
 <html>
@@ -14,72 +16,153 @@
 
     <title>@title</title>
 </head>
-<body background="/Public/Image/P.jpg">
+<body>
     <div>@filename</div>
-    <div>
-        <main class="col align-content-center" id="tablero">
-            @using (Html.BeginForm("Change", "PantallaPrincipal"))
-            {
-                int numero = 0;
-                string[] letras = { " ", "A", "B", "C", "D", "E", "F", "G", "H", " " };
-                <div class="fila font-weight-bold">
-                    @for (int i = 0; i < letras.Length; i++)
-                    {
-                        <div class="casilla border-0">@letras[i]</div>
-                    }
-                </div>
-                for (int i = 0; i < 8; i++)
+    <div class="row">
+        <div class="col">
+            <div id="tablero">
+                @using (Html.BeginForm("Change", "PantallaPrincipal"))
                 {
-                    var id2 = i + 1;
+                    int numero = 0;
+                    string[] letras = { " ", "A", "B", "C", "D", "E", "F", "G", "H", " " };
                     <div class="fila font-weight-bold">
-                        <div class="casilla border-0">@id2</div>
-                        @for (int j = 0; j < 8; j++)
+                        @for (int i = 0; i < letras.Length; i++)
                         {
-                            if (Model[numero].Color.Equals("black"))
-                            {
-                                <div class="casilla verdecitochido">
-                                    <button class="fichas black" type="submit" value="-1" name="io">
-                                    </button>
-                                </div>
-
-                            }
-                            else if (Model[numero].Color == "white")
-                            {
-                                <div class="casilla verdecitochido">
-                                    <button class="fichas white" type="submit" value="-1" name="io">
-                                    </button>
-                                </div>
-
-                            }
-                            else
-                            {
-                                <div class="casilla verdecitochido">
-                                    <button class="verdecitochido fichas" type="submit" value="@numero" name="io">
-                                    </button>
-                                </div>
-                            }
-                            numero++;
+                            <div class="casilla border-0">@letras[i]</div>
                         }
-                        <div class="casilla border-0">@id2</div>
+                    </div>
+                    for (int i = 0; i < 8; i++)
+                    {
+                        var id2 = i + 1;
+                        <div class="fila font-weight-bold">
+
+                            <div class="casilla">@id2</div>
+
+                            @for (int j = 0; j < 8; j++)
+                            {
+                                if (Model[numero].Color.Equals("black"))
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas black" type="submit" value="-1" name="io">
+                                        </button>
+                                    </div>
+                                }
+                                else if (Model[numero].Color == "white")
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas white" type="submit" value="-1" name="io">
+                                        </button>
+                                    </div>
+
+                                }
+                                else if (Model[numero].Color == "gray")
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas posible" type="submit" value="@numero" name="io">
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <div class="btn verdecitochido fichas" type="submit" value="@numero" name="io">
+                                        </div>
+                                    </div>
+                                }
+                                numero++;
+                            }
+                            <div class="casilla border-0">@id2</div>
+                        </div>
+                    }
+                    <div class="fila font-weight-bold">
+                        @for (int i = 0; i < letras.Length; i++)
+                        {
+                            <div class="casilla border-0">@letras[i]</div>
+                        }
                     </div>
                 }
-                <div class="fila font-weight-bold">
-                    @for (int i = 0; i < letras.Length; i++)
-                    {
-                        <div class="casilla border-0">@letras[i]</div>
+            </div>
+            
+        </div>
+
+        <div class="col">
+            <div id="tablero2">
+                <div class="row marron">
+                    @{ string[] punteo = { " ", " ", " ", "P", "U", "N", "T", "E", "O" };
+                        <div class="fila font-weight-bold">
+                            @for (int x = 0; x < punteo.Length; x++)
+                            {
+                                <div class="casilla border-0">@punteo[x]</div>
+                            }
+                        </div>
                     }
                 </div>
+                <div class="row">
+                    @{
+                        int negras = 0, blancas = 0;
+                        for (int x = 0; x < Model.Count(); x++)
+                        {
+                            if (Model[x].Color.Equals("black"))
+                            {
+                                negras++;
+                            }
+                            else if (Model[x].Color.Equals("white"))
+                            {
+                                blancas++;
+                            }
+                        }
+                    }
+                    <div class="col" id="posicion">
+                        <div class="row">
+                            <div class="col align-content-center">
+                                <div class="fichas2 black">
+                                </div>
+                            </div>
+                            <div class="col puntaje green2" id="contenedor">@negras</div>
+                        </div>
+                    </div>
+                    <div class="col" id="posicion">
+                        <div class="row">
+                            <div class="col align-content-center">
+                                <div class="fichas2 white">
+                                </div>
+                            </div>
+                            <div class="col puntaje green2" id="contenedor">@blancas</div>
+                        </div>
+                    </div>
 
-            }
-        </main>
 
-        @using (Html.BeginForm(actionName: "Upload", controllerName: "PantallaPrincipal",
-            FormMethod.Post,
-            htmlAttributes: new { enctype = "multipart/form-data" }))
-        {
-            <input type="file" name="doc" accept=".xml" />
-            <button>Cargar</button>
-        }
+                </div>
+                <div class="row marron border-0">
+                    @{ string[] turno = { " ", " ", " ", " ", "T", "U", "R", "N", "O" };
+                        <div class="fila font-weight-bold">
+                            @for (int x = 0; x < turno.Length; x++)
+                            {
+                                <div class="casilla border-0">@turno[x]</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col" id="posicion">
+                        <div class="row">
+                            <div class="col align-content-center">
+                                @if (TempData["Color"].Equals("black"))
+                                {
+                                    <div class="fichas2 black"></div>
+                                    TempData["Color"] = "black";
+                                }
+                                else if(TempData["Color"].Equals("white"))
+                                {
+                                    <div class="fichas2 white"></div>
+                                    TempData["Color"] = "white";
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <nav class="container">

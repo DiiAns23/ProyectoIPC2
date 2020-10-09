@@ -13,7 +13,6 @@ namespace Repetido.Controllers
         static List<PartidaIndividual> listaT = new List<PartidaIndividual>();
         static List<PartidaIndividual> Punteo = new List<PartidaIndividual>();
         static List<int> posibles = new List<int>();
-        static bool respuesta = true;
 
         public ActionResult PantallaPrincipal()
         {
@@ -72,37 +71,20 @@ namespace Repetido.Controllers
                     TempData["Color"] = "black";
                 }
                 change2(io);
-                if (respuesta == true)
-                {
-                    movimientosPosibles(io);
-                }
+                movimientosPosibles(io);
+ 
             }
             return View("Individual", listaT);
         }
 
-        public void change2(int io2)
+        public Boolean VerificarArriba(int io2)
         {
             int aux = io2 - 8;
-            int aux2 = io2 + 8;
-            int aux3 = io2 + 1;
-            int aux4 = io2 - 1;
-            int aux5 = io2 - 9;
-            int aux6 = io2 - 7;
-            int aux7 = io2 + 7;
-            int aux8 = io2 + 9;
-            bool arr = true, ab = true, der = true, izq = true, supizq = true, supder = true, infeizq = true, infeder = true;
             List<int> arriba = new List<int>();
-            List<int> abajo = new List<int>();
-            List<int> derecha = new List<int>();
-            List<int> izquierda = new List<int>();
-            List<int> superiorizquierda = new List<int>();
-            List<int> superiorderecha = new List<int>();
-            List<int> inferiorizquierda = new List<int>();
-            List<int> inferiorderecha = new List<int>();
             //Revisar Arriba
             if (aux < 0)
             {
-                arr = false;
+                return false;
             }
             else
             {
@@ -110,8 +92,7 @@ namespace Repetido.Controllers
                 {
                     if (aux < 0)
                     {
-                        arr = false;
-                        aux = -1;
+                        return false;
                     }
                     else
                     {
@@ -119,8 +100,7 @@ namespace Repetido.Controllers
                         {
                             if (listaT[aux].Color.Equals("") || listaT[aux].Color.Equals("gray"))
                             {
-                                arr = false;
-                                aux = -1;
+                                return false;
                             }
                             else
                             {
@@ -133,7 +113,7 @@ namespace Repetido.Controllers
                         {
                             if (arriba.Count() == 0)
                             {
-                                arr = false;
+                                return false;
                             }
                             else
                             {
@@ -152,18 +132,24 @@ namespace Repetido.Controllers
                                         TempData["Color"] = "black";
                                     }
                                 }
+
                             }
                             aux = -1;
                         }
                     }
-
                 }
+                return true;
             }
+        }
 
+        public Boolean VerificarAbajo(int io2)
+        {
+            int aux2 = io2 + 8;
+            List<int> abajo = new List<int>();
             //Revisar Abajo
             if (aux2 >= 64)
             {
-                ab = false;
+                return false;
             }
             else
             {
@@ -171,7 +157,7 @@ namespace Repetido.Controllers
                 {
                     if (aux2 >= 64)
                     {
-                        ab = false;
+                        return false;
                     }
                     else
                     {
@@ -179,8 +165,7 @@ namespace Repetido.Controllers
                         {
                             if (listaT[aux2].Color.Equals("") || listaT[aux2].Color.Equals("gray"))
                             {
-                                ab = false;
-                                aux2 = 65;
+                                return false;
                             }
                             else
                             {
@@ -192,7 +177,7 @@ namespace Repetido.Controllers
                         {
                             if (abajo.Count() == 0)
                             {
-                                ab = false;
+                                return false;
                             }
                             else
                             {
@@ -216,408 +201,518 @@ namespace Repetido.Controllers
                         }
                     }
                 }
+                return true;
             }
 
-            //Revisar Derecha
-            if (io2 == 7 || io2 == 15 || io2 == 23 || io2 == 31 || io2 == 39 || io2 == 47 || io2 == 55 || io2 == 63)
+        }
+
+        public Boolean VerificarDerecha(int io2)
+        {
+            int aux3 = 1;
+            List<int> derecha = new List<int>();
+            while (aux3 < 7)
             {
-                der = false;
-            }
-            else
-            {
-                int contador1 = 0;
-                while (aux3 > 7)
+                if (io2 + 1 == 8 || io2 + 1 == 16 || io2 + 1 == 24 || io2 + 1 == 32 || io2 + 1 == 40 || io2 + 1 == 48 || io2 + 1 == 56 || io2 + 1 == 64)
                 {
-                    aux3 = aux3 - 8;
-                    contador1++;
-                }
-                while (aux3 <= 7)
-                {
-                    if ((aux3 + contador1 * 8) <= 63)
+                    if (derecha.Count() == 0)
                     {
-                        if (listaT[io2].Color != listaT[aux3 + contador1 * 8].Color)
+                        return false;
+                    }
+                    else
+                    {
+                        for (int x = 0; x < derecha.Count(); x++)
                         {
-                            if (listaT[aux3 + contador1 * 8].Color.Equals("") || listaT[aux3 + contador1 * 8].Color.Equals("gray"))
+                            if (TempData["Color"].Equals("white"))
                             {
-                                der = false;
-                                aux3 = 9;
+                                PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "black");
+                                listaT[derecha[x]] = fichaNueva;
+                                TempData["Color"] = "white";
                             }
-                            else
+                            else if (TempData["Color"].Equals("black"))
                             {
-                                derecha.Add(aux3 + contador1 * 8);
-                                aux3 = aux3 + 1;
+                                PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "white");
+                                listaT[derecha[x]] = fichaNueva;
+                                TempData["Color"] = "black";
                             }
-
+                        }
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (listaT[io2].Color != listaT[io2 + aux3].Color)
+                    {
+                        if (listaT[io2+ aux3].Color.Equals("") || listaT[io2+ aux3].Color.Equals("gray"))
+                        {
+                            return false;
                         }
                         else
                         {
-                            if (derecha.Count() == 0)
-                            {
-                                der = false;
-                            }
-                            else
-                            {
-                                for (int x = 0; x < derecha.Count(); x++)
-                                {
-                                    if (TempData["Color"].Equals("white"))
-                                    {
-                                        PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "black");
-                                        listaT[derecha[x]] = fichaNueva;
-                                        TempData["Color"] = "white";
-                                    }
-                                    else if (TempData["Color"].Equals("black"))
-                                    {
-                                        PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "white");
-                                        listaT[derecha[x]] = fichaNueva;
-                                        TempData["Color"] = "black";
-                                    }
-                                }
-                            }
-                            aux3 = 9;
+                            derecha.Add(io2+aux3);
+                            aux3 = aux3 + 1;
                         }
                     }
                     else
                     {
-                        der = false;
-                        aux3 = 9;
+                        if (derecha.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < derecha.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "black");
+                                    listaT[derecha[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derecha[x], "white");
+                                    listaT[derecha[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
                     }
                 }
             }
-            //Revisar Izquierda
-            if (io2 == 0 || io2 == 8 || io2 == 16 || io2 == 24 || io2 == 32 || io2 == 40 || io2 == 48 || io2 == 56)
-            {
-                izq = false;
-            }
-            else
-            {
-                int contador2 = 0;
-                while (aux4 > 8)
-                {
-                    aux4 = aux4 - 8;
-                    contador2++;
-                }
-                if (aux4 < 0)
-                {
-                    izq = false;
-                }
-                else
-                {
-                    while (aux4 >= 0)
-                    {
-                        if (aux4 + contador2 * 8 >= 0)
-                        {
-                            if (listaT[io2].Color != listaT[aux4 + contador2 * 8].Color)
-                            {
-                                if (listaT[aux4 + contador2 * 8].Color.Equals("") || listaT[aux4 + contador2 * 8].Color.Equals("gray"))
-                                {
-                                    izq = false;
-                                    aux4 = -1;
-                                }
-                                else
-                                {
-                                    izquierda.Add(aux4 + contador2 * 8);
-                                    aux4 = aux4 - 1;
-                                }
+            return true;
+        }
 
-                            }
-                            else
-                            {
-                                if (izquierda.Count() == 0)
-                                {
-                                    izq = false;
-                                }
-                                else
-                                {
-                                    for (int x = 0; x < izquierda.Count(); x++)
-                                    {
-                                        if (TempData["Color"].Equals("white"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "black");
-                                            listaT[izquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "white";
-                                        }
-                                        else if (TempData["Color"].Equals("black"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "white");
-                                            listaT[izquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "black";
-                                        }
-                                    }
-                                }
-                                aux4 = -1;
-                            }
-                        }
-                        else
-                        {
-                            izq = false;
-                            aux4 = -1;
-                        }
-                    }
-                }
-            }
-            //Revisar Superior Izquierda
-            if (io2 - 9 < 0)
+        public Boolean VerificarIzquierda(int io2)
+        {
+            int aux3 = 1;
+            List<int> izquierda = new List<int>();
+            while (aux3 < 7)
             {
-                supizq = false;
-            }
-            else
-            {
-                if(io2 == 8 || io2 == 16 || io2 == 24 || io2 == 32 || io2 == 40 || io2 == 48 || io2 == 56)
+                if (io2 - 1 == -1 || io2 - 1 == 7 || io2 - 1 == 15 || io2 - 1 == 23 || io2 - 1 == 31 || io2 - 1 == 39 || io2 - 1 == 47 || io2 - 1 == 55)
                 {
-                    supizq = false;
+                    if (izquierda.Count() == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        for (int x = 0; x < izquierda.Count(); x++)
+                        {
+                            if (TempData["Color"].Equals("white"))
+                            {
+                                PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "black");
+                                listaT[izquierda[x]] = fichaNueva;
+                                TempData["Color"] = "white";
+                            }
+                            else if (TempData["Color"].Equals("black"))
+                            {
+                                PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "white");
+                                listaT[izquierda[x]] = fichaNueva;
+                                TempData["Color"] = "black";
+                            }
+                        }
+                        return true;
+                    }
                 }
                 else
                 {
-                    while (aux5 >= 0)
+                    if (listaT[io2].Color != listaT[io2 - aux3].Color)
                     {
-                        if (aux5 < 0)
+                        if (listaT[io2 - aux3].Color.Equals("") || listaT[io2 - aux3].Color.Equals("gray"))
                         {
-                            supizq = false;
-                            aux5 = -1;
+                            return false;
                         }
                         else
                         {
-                            if (listaT[io2].Color != listaT[aux5].Color)
+                            izquierda.Add(io2 - aux3);
+                            aux3 = aux3 + 1;
+                        }
+                    }
+                    else
+                    {
+                        if (izquierda.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < izquierda.Count(); x++)
                             {
-                                if (listaT[aux5].Color.Equals("") || listaT[aux5].Color.Equals("gray"))
+                                if (TempData["Color"].Equals("white"))
                                 {
-                                    supizq = false;
-                                    aux5 = -1;
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "black");
+                                    listaT[izquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
                                 }
-                                else
+                                else if (TempData["Color"].Equals("black"))
                                 {
-                                    superiorizquierda.Add(aux5);
-                                    aux5 = aux5 - 9;
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(izquierda[x], "white");
+                                    listaT[izquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
                                 }
                             }
-                            else
-                            {
-                                if (superiorizquierda.Count() == 0)
-                                {
-                                    supizq = false;
-                                }
-                                else
-                                {
-                                    for (int x = 0; x < superiorizquierda.Count(); x++)
-                                    {
-                                        if (TempData["Color"].Equals("white"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "black");
-                                            listaT[superiorizquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "white";
-                                        }
-                                        else if (TempData["Color"].Equals("black"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "white");
-                                            listaT[superiorizquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "black";
-                                        }
-                                    }
-                                }
-                                aux5 = -1;
-                            }
+                            return true;
                         }
                     }
                 }
             }
+            return true;
 
-            //Revisar Superior Derecha
-            if (io2-7<=0)
-            {
-                supder = false;
-            }
-            else
-            {
-                if (io2 == 15 || io2 == 23 || io2 == 31 || io2 == 39 || io2 == 47 || io2 == 55 || io2 == 63)
-                {
-                    supder = false;
-                }
-                else
-                {
-                    while (aux6 >= 0)
-                    {
-                        if (aux6 < 0)
-                        {
-                            supder = false;
-                            aux6 = -1;
-                        }
-                        else
-                        {
-                            if (listaT[io2].Color != listaT[aux6].Color)
-                            {
-                                if (listaT[aux6].Color.Equals("") || listaT[aux6].Color.Equals("gray"))
-                                {
-                                    supder = false;
-                                    aux6 = -1;
-                                }
-                                else
-                                {
-                                    superiorderecha.Add(aux6);
-                                    aux6 = aux6 - 7;
-                                }
-                            }
-                            else
-                            {
-                                if (superiorderecha.Count() == 0)
-                                {
-                                    supder = false;
-                                }
-                                else
-                                {
-                                    for (int x = 0; x < superiorderecha.Count(); x++)
-                                    {
-                                        if (TempData["Color"].Equals("white"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "black");
-                                            listaT[superiorderecha[x]] = fichaNueva;
-                                            TempData["Color"] = "white";
-                                        }
-                                        else if (TempData["Color"].Equals("black"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "white");
-                                            listaT[superiorderecha[x]] = fichaNueva;
-                                            TempData["Color"] = "black";
-                                        }
-                                    }
-                                }
-                                aux6 = -1;
-                            }
-                        }
-                    }
-                }
-            }
+        }
 
-            //Revisar Inferior Izquierda
-            if (io2 >= 56)
+        public Boolean VerificarIzquierdaSup(int io2)
+        {
+            List<int> superiorizquierda = new List<int>();
+            int aux5 = 9;
+            while (aux5 <= 56)
             {
-                infeizq = false;
-            }
-            else
-            {
-                if (io2 == 0 || io2 == 8 || io2 == 16 || io2 == 24 || io2 == 32 || io2 == 40 || io2 == 48)
+                if (io2 - aux5 < 0 || io2 - aux5 == 7 || io2 - aux5 == 15 || io2 - aux5 == 23 || io2 - aux5 == 31 || io2 - aux5 == 39 || io2 - aux5 == 47 || io2 - aux5 == 55)
                 {
-                    infeder = false;
-                }
-                else
-                {
-                    while (aux7 <= 63)
+                    if (superiorizquierda.Count() == 0)
                     {
-                        if (aux7 > 63)
+                        return false;
+                    }
+                    else
+                    {
+                        if (listaT[io2 - aux5 + 9].Color == listaT[io2].Color)
                         {
-                            infeizq = false;
-                            aux7 = 64;
+                            for (int x = 0; x < superiorizquierda.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "black");
+                                    listaT[superiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "white");
+                                    listaT[superiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
                         }
                         else
                         {
-                            if (listaT[io2].Color != listaT[aux7].Color)
-                            {
-                                if (listaT[aux7].Color.Equals("") || listaT[aux7].Color.Equals("gray"))
-                                {
-                                    infeizq = false;
-                                    aux7 = 64;
-                                }
-                                else
-                                {
-                                    inferiorizquierda.Add(aux7);
-                                    aux7 = aux7 + 7;
-                                }
-                            }
-                            else
-                            {
-                                if (inferiorizquierda.Count() == 0)
-                                {
-                                    infeizq = false;
-                                }
-                                else
-                                {
-                                    for (int x = 0; x < inferiorizquierda.Count(); x++)
-                                    {
-                                        if (TempData["Color"].Equals("white"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "black");
-                                            listaT[inferiorizquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "white";
-                                        }
-                                        else if (TempData["Color"].Equals("black"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "white");
-                                            listaT[inferiorizquierda[x]] = fichaNueva;
-                                            TempData["Color"] = "black";
-                                        }
-                                    }
-                                }
-                                aux7 = 64;
-                            }
+                            return false;
                         }
                     }
                 }
-            }
+                else
+                {
+                    if (listaT[io2].Color != listaT[io2 - aux5].Color)
+                    {
+                        if (listaT[io2 - aux5].Color.Equals("") || listaT[io2 - aux5].Color.Equals("gray"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            superiorizquierda.Add(io2 - aux5);
+                            aux5 = aux5 + 9;
+                        }
+                    }
+                    else
+                    {
+                        if (superiorizquierda.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < superiorizquierda.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "black");
+                                    listaT[superiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorizquierda[x], "white");
+                                    listaT[superiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
 
-            //Revisar Inferior Derecha
-            if (io2 >= 56)
-            {
-                infeder = false;
-            }
-            else
-            {
-                if (io2 == 7 || io2 == 15 || io2 == 23 || io2 == 31 || io2 == 39 || io2 == 47 || io2 == 55 || io2 == 63)
-                {
-                    infeder = false;
+                    }
+                    
                 }
-                else
+            }
+            return true;
+
+            
+
+        }
+
+        public Boolean VerificarDerechaSup(int io2)
+        {
+            List<int> superiorderecha = new List<int>();
+            int aux5 = 7;
+            while (aux5 <= 56)
+            {
+                if (io2 - aux5 <= 0 || io2 - aux5 == 1 || io2 - aux5 == 8 || io2 - aux5 == 16 || io2 - aux5 == 24 || io2 - aux5 == 32 || io2 - aux5 == 40 || io2 - aux5 == 56)
                 {
-                    while (aux8 <= 63)
+                    if (superiorderecha.Count() == 0)
                     {
-                        if (aux8 > 63)
+                        return false;
+                    }
+                    else
+                    {
+                        if (listaT[io2 - aux5 + 7].Color == listaT[io2].Color)
                         {
-                            infeder = false;
-                            aux8 = 64;
+                            for (int x = 0; x < superiorderecha.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "black");
+                                    listaT[superiorderecha[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "white");
+                                    listaT[superiorderecha[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
                         }
                         else
                         {
-                            if (listaT[io2].Color != listaT[aux8].Color)
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (listaT[io2].Color != listaT[io2 - aux5].Color)
+                    {
+                        if (listaT[io2 - aux5].Color.Equals("") || listaT[io2 - aux5].Color.Equals("gray"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            superiorderecha.Add(io2 - aux5);
+                            aux5 = aux5 + 7;
+                        }
+                    }
+                    else
+                    {
+                        if (superiorderecha.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < superiorderecha.Count(); x++)
                             {
-                                if (listaT[aux8].Color.Equals("") || listaT[aux8].Color.Equals("gray"))
+                                if (TempData["Color"].Equals("white"))
                                 {
-                                    infeder = false;
-                                    aux8 = 64;
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "black");
+                                    listaT[superiorderecha[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
                                 }
-                                else
+                                else if (TempData["Color"].Equals("black"))
                                 {
-                                    inferiorderecha.Add(aux8);
-                                    aux8 = aux8 + 9;
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(superiorderecha[x], "white");
+                                    listaT[superiorderecha[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
                                 }
                             }
-                            else
-                            {
-                                if (inferiorderecha.Count() == 0)
-                                {
-                                    infeder = false;
-                                }
-                                else
-                                {
-                                    for (int x = 0; x < inferiorderecha.Count(); x++)
-                                    {
-                                        if (TempData["Color"].Equals("white"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(inferiorderecha[x], "black");
-                                            listaT[inferiorderecha[x]] = fichaNueva;
-                                            TempData["Color"] = "white";
-                                        }
-                                        else if (TempData["Color"].Equals("black"))
-                                        {
-                                            PartidaIndividual fichaNueva = new PartidaIndividual(inferiorderecha[x], "white");
-                                            listaT[inferiorderecha[x]] = fichaNueva;
-                                            TempData["Color"] = "black";
-                                        }
-                                    }
-                                }
-                                aux8 = 64;
-                            }
+                            return true;
                         }
                     }
                 }
             }
+            return true;
+        }
+
+        public Boolean VerificarIzquierdaInf(int io2)
+        {
+            List<int> inferiorizquierda = new List<int>();
+            int aux5 = 7;
+            while (aux5 <= 56)
+            {
+                if (io2 + aux5 == 7 || io2 + aux5 == 15 || io2 + aux5 == 23 || io2 + aux5 == 31 || io2 + aux5 == 39 || io2 + aux5 == 47 || io2 + aux5 == 55 || io2 + aux5 >= 56)
+                {
+                    if (inferiorizquierda.Count() == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if (listaT[io2 + aux5].Color == listaT[io2].Color)
+                        {
+                            for (int x = 0; x < inferiorizquierda.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "black");
+                                    listaT[inferiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "white");
+                                    listaT[inferiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (listaT[io2].Color != listaT[io2 + aux5].Color)
+                    {
+                        if (listaT[io2 + aux5].Color.Equals("") || listaT[io2 + aux5].Color.Equals("gray"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            inferiorizquierda.Add(io2 + aux5);
+                            aux5 = aux5 + 7;
+                        }
+                    }
+                    else
+                    {
+                        if (inferiorizquierda.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < inferiorizquierda.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "black");
+                                    listaT[inferiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(inferiorizquierda[x], "white");
+                                    listaT[inferiorizquierda[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public Boolean VerificarDerechaInf(int io2)
+        {
+            List<int> derechainferior = new List<int>();
+            int aux5 = 9;
+            while (aux5 <= 56)
+            {
+                if (io2 + aux5 == 16 || io2 + aux5 == 24 || io2 + aux5 == 32 || io2 + aux5 == 40 || io2 + aux5 == 48 || io2 + aux5 >= 56)
+                {
+                    if (derechainferior.Count() == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        if (listaT[io2 + aux5 - 9].Color == listaT[io2].Color)
+                        {
+                            for (int x = 0; x < derechainferior.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derechainferior[x], "black");
+                                    listaT[derechainferior[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derechainferior[x], "white");
+                                    listaT[derechainferior[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (listaT[io2].Color != listaT[io2 + aux5].Color)
+                    {
+                        if (listaT[io2 + aux5].Color.Equals("") || listaT[io2 + aux5].Color.Equals("gray"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            derechainferior.Add(io2 + aux5);
+                            aux5 = aux5 + 9;
+                        }
+                    }
+                    else
+                    {
+                        if (derechainferior.Count() == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            for (int x = 0; x < derechainferior.Count(); x++)
+                            {
+                                if (TempData["Color"].Equals("white"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derechainferior[x], "black");
+                                    listaT[derechainferior[x]] = fichaNueva;
+                                    TempData["Color"] = "white";
+                                }
+                                else if (TempData["Color"].Equals("black"))
+                                {
+                                    PartidaIndividual fichaNueva = new PartidaIndividual(derechainferior[x], "white");
+                                    listaT[derechainferior[x]] = fichaNueva;
+                                    TempData["Color"] = "black";
+                                }
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void change2(int io2)
+        {
+            int numero = io2;
+            bool ab = VerificarAbajo(numero);
+            bool arr = VerificarArriba(numero);
+            bool der = VerificarDerecha(numero);
+            bool izq = VerificarIzquierda(numero);
+            bool supizq = VerificarIzquierdaSup(numero);
+            bool supder = VerificarDerechaSup(numero);
+            bool infeizq = VerificarIzquierdaInf(numero);
+            bool infeder = VerificarDerechaInf(numero);
 
             if (arr == true || ab == true || der == true || izq == true || supizq == true || supder == true || infeizq == true || infeder == true)
             {
@@ -648,8 +743,310 @@ namespace Repetido.Controllers
             }
         }
 
-        public void movimientosPosibles(int io2)
+        public Boolean PosibleArriba(List<int> listafichas)
         {
+            bool temporal = false;
+            int aux1 = 8;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] <= 7 || listafichas[x] >= 56)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] - 8].Color != ("black") && listaT[listafichas[x] - 8].Color != ("white"))
+                    {
+                        while (listafichas[x] + aux1 < 56 && listaT[listafichas[x] + aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 8;
+                        }
+                        if (listafichas[x] + aux1 < 63)
+                        {
+                            if (listaT[listafichas[x] + aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] + aux1].Color != "" && listaT[listafichas[x] + aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] - 8, "gray");
+                                    listaT[listafichas[x] - 8] = fichaPosible;
+                                    posibles.Add(listafichas[x] - 8);
+                                    temporal = true;
+                                }
+                                aux1 = 8;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleAbajo(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 8;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] <= 7 || listafichas[x] >= 56)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] + 8].Color != ("black") && listaT[listafichas[x] + 8].Color != ("white"))
+                    {
+                        while (listafichas[x] + aux1 < 63 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 8;
+                        }
+                        if (listafichas[x] - aux1 > 0)
+                        {
+                            if (listaT[listafichas[x] - aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] - aux1].Color != "" && listaT[listafichas[x] - aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] + 8, "gray");
+                                    listaT[listafichas[x] + 8] = fichaPosible;
+                                    posibles.Add(listafichas[x] + 8);
+                                    temporal = true;
+                                }
+                                aux1 = 8;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleIzquierda(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 1;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] == 0 || listafichas[x] == 8 || listafichas[x] == 16 || listafichas[x] == 24 || listafichas[x] == 32 || listafichas[x] == 40 || listafichas[x] == 48 || listafichas[x] == 56 || listafichas[x] == 63)
+                {
+                    return temporal;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] - 1].Color != ("black") && listaT[listafichas[x] - 1].Color != ("white"))
+                    {
+                        while (listaT[listafichas[x] + aux1].Color == listaT[listafichas[x]].Color && aux1 < 7)
+                        {
+                            aux1 = aux1 + 1;
+                        }
+                        if (listaT[listafichas[x] + aux1].Color != listaT[listafichas[x]].Color)
+                        {
+                            if ((listaT[listafichas[x] + aux1].Color != "") && listaT[listafichas[x] + aux1].Color != "gray")
+                            {
+                                PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] - 1, "gray");
+                                listaT[listafichas[x] - 1] = fichaPosible;
+                                posibles.Add(listafichas[x] - 1);
+                                temporal = true;
+                            }
+                            aux1 = 1;
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleDerecha(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 1;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] == 0 || listafichas[x] == 7 || listafichas[x] == 15 || listafichas[x] == 23 || listafichas[x] == 31 || listafichas[x] == 39 || listafichas[x] == 47 || listafichas[x] == 55 || listafichas[x] == 63)
+                {
+                    return temporal;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] + 1].Color != ("black") && listaT[listafichas[x] + 1].Color != ("white"))
+                    {
+                        while (aux1 < 7 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 1;
+                        }
+                        if (listaT[listafichas[x] - aux1].Color != listaT[listafichas[x]].Color)
+                        {
+                            if (listaT[listafichas[x] - aux1].Color != "" && listaT[listafichas[x] - aux1].Color != "gray")
+                            {
+                                PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] + 1, "gray");
+                                listaT[listafichas[x] + 1] = fichaPosible;
+                                posibles.Add(listafichas[x] + 1);
+                                temporal = true;
+                            }
+                            aux1 = 1;
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleSuperiorIzquierda(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 9;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] <= 8 || listafichas[x] == 16 || listafichas[x] == 24 || listafichas[x] == 32 || listafichas[x] == 40 || listafichas[x] == 48 || listafichas[x] == 56 || listafichas[x] == 63)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] - 9].Color != ("black") && listaT[listafichas[x] - 9].Color != ("white"))
+                    {
+                        while (listafichas[x] + aux1 < 63 && listaT[listafichas[x] + aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 9;
+                        }
+                        if (listafichas[x] + aux1 < 63)
+                        {
+                            if (listaT[listafichas[x] + aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] + aux1].Color != "" && listaT[listafichas[x] + aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] - 9, "gray");
+                                    listaT[listafichas[x] - 9] = fichaPosible;
+                                    posibles.Add(listafichas[x] - 9);
+                                    temporal = true;
+                                }
+                                aux1 = 9;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleSuperiorDerecha(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 7;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] <= 7 || listafichas[x] == 15 || listafichas[x] == 23 || listafichas[x] == 31 || listafichas[x] == 49 || listafichas[x] == 47 || listafichas[x] == 55 || listafichas[x] == 63)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] - 7].Color != ("black") && listaT[listafichas[x] - 7].Color != ("white"))
+                    {
+                        while (listafichas[x] + aux1 < 63 && listaT[listafichas[x] + aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 7;
+                        }
+                        if (listafichas[x] + aux1 < 63)
+                        {
+                            if (listaT[listafichas[x] + aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] + aux1].Color != "" && listaT[listafichas[x] + aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] - 7, "gray");
+                                    listaT[listafichas[x] - 7] = fichaPosible;
+                                    posibles.Add(listafichas[x] - 7);
+                                    temporal = true;
+                                }
+                                aux1 = 7;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleInferiorIzquierda(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 7;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] < 7 || listafichas[x] == 8 || listafichas[x] == 16 || listafichas[x] == 24 || listafichas[x] == 32 || listafichas[x] == 40 || listafichas[x] == 48 || listafichas[x] >= 56)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] + 7].Color != ("black") && listaT[listafichas[x] + 7].Color != ("white"))
+                    {
+                        while (listafichas[x] + aux1 < 63 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 7;
+                        }
+                        if (listafichas[x] - aux1 > 0)
+                        {
+                            if (listaT[listafichas[x] - aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] - aux1].Color != "" && listaT[listafichas[x] - aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] + 7, "gray");
+                                    listaT[listafichas[x] + 7] = fichaPosible;
+                                    posibles.Add(listafichas[x] + 7);
+                                    temporal = true;
+                                }
+                                aux1 = 7;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean PosibleInferiorDerecha(List<int> listafichas)
+        {
+            bool temporal = false;
+            int aux1 = 9;
+            for (int x = 0; x < listafichas.Count; x++)
+            {
+                if (listafichas[x] < 7 || listafichas[x] == 15 || listafichas[x] == 23 || listafichas[x] == 31 || listafichas[x] == 39 || listafichas[x] == 47 || listafichas[x] >=55)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (listaT[listafichas[x] + 9].Color != ("black") && listaT[listafichas[x] + 9].Color != ("white"))
+                    {
+                        while (listafichas[x] - aux1 > 0 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color)
+                        {
+                            aux1 = aux1 + 9;
+                        }
+                        if (listafichas[x] - aux1 > 0)
+                        {
+                            if (listaT[listafichas[x] - aux1].Color != listaT[listafichas[x]].Color)
+                            {
+                                if (listaT[listafichas[x] - aux1].Color != "" && listaT[listafichas[x] - aux1].Color != "gray")
+                                {
+                                    PartidaIndividual fichaPosible = new PartidaIndividual(listafichas[x] + 9, "gray");
+                                    listaT[listafichas[x] + 9] = fichaPosible;
+                                    posibles.Add(listafichas[x] + 9);
+                                    temporal = true;
+                                }
+                                aux1 = 9;
+                            }
+                        }
+                    }
+                }
+            }
+            return temporal;
+        }
+
+        public Boolean movimientosPosibles(int io2)
+        {
+            bool blancas = true;
+            bool negras = true;
+            List<int> PosiblesNegras = new List<int>();
+            List<int> PosiblesBlancas = new List<int>();
             for (int y = 0; y < posibles.Count(); y++)
             {
                 if (posibles[y] != io2)
@@ -659,844 +1056,64 @@ namespace Repetido.Controllers
                 }
             }
             posibles.Clear();
-            
+            for(int q =0; q<listaT.Count(); q++)
+            {
+                if (listaT[q].Color.Equals("black"))
+                {
+                    PosiblesNegras.Add(q);
+                }
+                else if (listaT[q].Color.Equals("white"))
+                {
+                    PosiblesBlancas.Add(q);
+                }
+            }
             if (TempData["Color"].Equals("black"))
             {
-                for (int f = 0; f < listaT.Count(); f++)
+                bool arr = PosibleArriba(PosiblesBlancas);
+                bool ab = PosibleAbajo(PosiblesBlancas);
+                bool izq = PosibleIzquierda(PosiblesBlancas);
+                bool der = PosibleDerecha(PosiblesBlancas);
+                bool supizq = PosibleSuperiorIzquierda(PosiblesBlancas);
+                bool supder = PosibleSuperiorDerecha(PosiblesBlancas);
+                bool infeizq = PosibleInferiorIzquierda(PosiblesBlancas);
+                bool infeder = PosibleInferiorDerecha(PosiblesBlancas);
+                if (arr == true || ab == true || der == true || izq == true || supizq == true || supder == true || infeizq == true || infeder == true)
                 {
-                    bool arr = true, ab = true, der = true, izq = true, supizq = true, supder = true, infeizq = true, infeder = true;
-                    int aux1 = 8;
-                    int aux2 = 8;
-                    int aux3 = 1;
-                    int aux4 = 1;
-                    int aux5 = 9;
-                    int aux6 = 7;
-                    int aux7 = 7;
-                    int aux8 = 9;
-                    if (listaT[f].Color.Equals("white"))
-                    {
-                        //Revision Superior
-                        if ((f - 8) < 0) //Revisa que no sea la primera fila
-                        {
-                            arr = false;
-                        }
-                        else
-                        {
-                            while (aux1 < 64)
-                            {
-                                if (listaT[f - 8].Color.Equals("white") || listaT[f - 8].Color.Equals("black"))
-                                {
-                                    aux1 = 64;
-                                    arr = false;
-                                }
-                                else
-                                {
-                                    if (f + aux1 > 63)
-                                    {
-                                        aux1 = 64;
-                                        arr = false;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f + aux1].Color.Equals("white"))
-                                        {
-                                            aux1 = aux1 + 8;
-                                        }
-                                        else if (listaT[f + aux1].Color.Equals("black"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f - 8, "gray");
-                                            listaT[f - 8] = fichaPosible;
-                                            posibles.Add(f - 8);
-                                            aux1 = 64;
-                                        }
-                                        else
-                                        {
-                                            aux1 = 64;
-                                            arr = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior
-                        if ((f + 8) > 63) //Revisa que no sea la ultima fila
-                        {
-                            ab = false;
-                        }
-                        else
-                        {
-                            while (aux2 < 63)
-                            {
-                                if (listaT[f + 8].Color.Equals("black") || listaT[f + 8].Color.Equals("white"))
-                                {
-                                    aux2 = 64;
-                                    ab = false;
-                                }
-                                else
-                                {
-                                    if (f - aux2 < 0)
-                                    {
-                                        aux2 = 64;
-                                        ab = false;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f - aux2].Color.Equals("white"))
-                                        {
-                                            aux2 = aux2 + 8;
-                                        }
-                                        else if (listaT[f - aux2].Color.Equals("black"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f + 8, "gray");
-                                            listaT[f + 8] = fichaPosible;
-                                            posibles.Add(f + 8);
-                                            aux2 = 64;
-                                        }
-                                        else
-                                        {
-                                            aux2 = 64;
-                                            ab = false;
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-
-                        //Revision Izquierda
-                        if (f == 7 || f == 15 || f == 23 || f == 31 || f == 39 || f == 47 || f == 55 || f == 63)
-                        {
-                            izq = false;
-                        }
-                        else
-                        {
-                            int ayudante1 = f, contador1 = 0;
-                            while (ayudante1 > 7)
-                            {
-                                ayudante1 = ayudante1 - 8;
-                                contador1++;
-                            }
-                            if ((ayudante1 - 1) < 0)
-                            {
-                                izq = false;
-                            }
-                            else
-                            {
-                                while (ayudante1 <= 7)
-                                {
-                                    if (listaT[f - 1].Color.Equals("black") || listaT[f - 1].Color.Equals("white"))
-                                    {
-                                        ayudante1 = 8;
-                                        izq = false;
-                                    }
-                                    else
-                                    {
-                                        if (f + aux3 > 63)
-                                        {
-                                            ayudante1 = 8;
-                                            izq = false;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f + aux3].Color.Equals("white"))
-                                            {
-                                                aux3 = aux3 + 1;
-                                            }
-                                            else if (listaT[f + aux3].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f - 1, "gray");
-                                                listaT[f - 1] = fichaPosible;
-                                                posibles.Add(f - 1);
-                                                ayudante1 = 8;
-                                            }
-                                            else
-                                            {
-                                                ayudante1 = 8;
-                                                ab = false;
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                        //Revision Derecha
-                        if (f == 0 || f == 8 || f == 16 || f == 24 || f == 32 || f == 40 || f == 48 || f == 56)
-                        {
-                            der = false;
-                        }
-                        else
-                        {
-                            int ayudante2 = f, contador2 = 0;
-                            while (ayudante2 > 7)
-                            {
-                                ayudante2 = ayudante2 - 8;
-                                contador2++;
-                            }
-                            if ((ayudante2 + 1) > 7)
-                            {
-                                der = false;
-                            }
-                            else
-                            {
-                                while (ayudante2 >= 0)
-                                {
-                                    if (listaT[f + 1].Color.Equals("black") || listaT[f + 1].Color.Equals("white"))
-                                    {
-                                        ayudante2 = -1;
-                                        der = false;
-                                    }
-                                    else
-                                    {
-                                        if (f - aux4 < 0)
-                                        {
-                                            ayudante2 = -1;
-                                            der = false;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f - aux4].Color.Equals("white"))
-                                            {
-                                                aux4 = aux4 + 1;
-                                            }
-                                            else if (listaT[f - aux4].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f + 1, "gray");
-                                                listaT[f + 1] = fichaPosible;
-                                                posibles.Add(f + 1);
-                                                ayudante2 = -1;
-                                            }
-                                            else
-                                            {
-                                                ayudante2 = -1;
-                                                der = false;
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-                        }
-                        //Revision Superior Izquierda
-                        if ((f-9) < 0)
-                        {
-                            supizq = false;
-                        }
-                        else
-                        {
-                            if ((f) == 8 || (f) == 16 || (f) == 24 || (f) == 32 || (f) == 40 || (f) == 48 || (f) == 56)
-                            {
-                                supizq = false;
-                            }
-                            else
-                            {
-                                while (aux5 >= 0)
-                                {
-                                    if (listaT[f - 9].Color.Equals("black") || listaT[f - 9].Color.Equals("white"))
-                                    {
-                                        supizq = false;
-                                        aux5 = -1;
-                                    }
-                                    else
-                                    {
-                                        if (f + aux5 > 63)
-                                        {
-                                            supizq = false;
-                                            aux5 = -1;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f + aux5].Color.Equals("white"))
-                                            {
-                                                aux5 = aux5 + 9;
-                                            }
-                                            else if (listaT[f + aux5].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f - 9, "gray");
-                                                listaT[f - 9] = fichaPosible;
-                                                posibles.Add(f - 9);
-                                                aux5 = -1;
-                                            }
-                                            else
-                                            {
-                                                aux5 = -1;
-                                                supizq = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Superior Derecha
-                        if ((f - 7) <= 0)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f) == 15 || (f) == 23 || (f) == 31 || (f) == 39 || (f) == 47 || (f) == 55|| f == 63)
-                            {
-                                supder = false;
-                            }
-                            else
-                            {
-                                while (aux6 >= 0)
-                                {
-                                    if (listaT[f - 7].Color.Equals("black") || listaT[f - 7].Color.Equals("white"))
-                                    {
-                                        supder = false;
-                                        aux6 = -1;
-                                    }
-                                    else
-                                    {
-                                        if (f + aux6 > 63)
-                                        {
-                                            supder = false;
-                                            aux6 = -1;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f + aux6].Color.Equals("white"))
-                                            {
-                                                aux6 = aux6 + 7;
-                                            }
-                                            else if (listaT[f + aux6].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f - 7, "gray");
-                                                listaT[f - 7] = fichaPosible;
-                                                posibles.Add(f - 7);
-                                                aux6 = -1;
-                                            }
-                                            else
-                                            {
-                                                aux6 = -1;
-                                                supder = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior Izquierda
-                        if (f >= 56)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f + 7) == 7 || (f + 7) == 15 || (f + 7) == 23 || (f + 7) == 31 || (f + 7) == 39 || (f + 7) == 47 || (f + 7) == 55)
-                            {
-                                infeizq = false;
-                            }
-                            else
-                            {
-                                while (aux7 < 64)
-                                {
-                                    if (listaT[f + 7].Color.Equals("black") || listaT[f + 7].Color.Equals("white"))
-                                    {
-                                        infeizq = false;
-                                        aux7 = 64;
-                                    }
-                                    else
-                                    {
-                                        if (f - aux7 < 0)
-                                        {
-                                            infeizq = false;
-                                            aux7 = 64;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f - aux7].Color.Equals("white"))
-                                            {
-                                                aux7 = aux7 + 7;
-                                            }
-                                            else if (listaT[f - aux7].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f + 7, "gray");
-                                                listaT[f + 7] = fichaPosible;
-                                                posibles.Add(f + 7);
-                                                aux7 = 64;
-                                            }
-                                            else
-                                            {
-                                                aux7 = 64;
-                                                infeizq = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior Derecha
-                        if (f >= 56)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f) == 7 || (f) == 15 || (f) == 23 || (f) == 31 || (f) == 39 || (f) == 47 || (f) == 55)
-                            {
-                                infeder = false;
-                            }
-                            else
-                            {
-                                while (aux8 < 64)
-                                {
-                                    if (listaT[f + 9].Color.Equals("black") || listaT[f + 9].Color.Equals("white"))
-                                    {
-                                        infeder = false;
-                                        aux8 = 64;
-                                    }
-                                    else
-                                    {
-                                        if (f - aux8 < 0)
-                                        {
-                                            infeder = false;
-                                            aux8 = 64;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f - aux8].Color.Equals("white"))
-                                            {
-                                                aux8 = aux8 + 9;
-                                            }
-                                            else if (listaT[f - aux8].Color.Equals("black"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f + 9, "gray");
-                                                listaT[f + 9] = fichaPosible;
-                                                posibles.Add(f + 9);
-                                                aux8 = 64;
-                                            }
-                                            else
-                                            {
-                                                aux8 = 64;
-                                                infeder = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    negras = true;
+                    return negras;
                 }
-                TempData["Color"] = "black";
+                else
+                {
+                    return negras;
+                }
             }
             else
             {
-                for (int f = 0; f < listaT.Count(); f++)
+                bool arr = PosibleArriba(PosiblesNegras);
+                bool ab = PosibleAbajo(PosiblesNegras);
+                bool izq = PosibleIzquierda(PosiblesNegras);
+                bool der = PosibleDerecha(PosiblesNegras);
+                bool supizq = PosibleSuperiorIzquierda(PosiblesNegras);
+                bool supder = PosibleSuperiorDerecha(PosiblesNegras);
+                bool infeizq = PosibleInferiorIzquierda(PosiblesNegras);
+                bool infeder = PosibleInferiorDerecha(PosiblesNegras);
+                if (arr == true || ab == true || der == true || izq == true || supizq == true || supder == true || infeizq == true || infeder == true)
                 {
-                    bool arr = true, ab = true, der = true, izq = true, supizq = true, supder = true, infeizq = true, infeder = true;
-                    int aux1 = 8;
-                    int aux2 = 8;
-                    int aux3 = 1;
-                    int aux4 = 1;
-                    int aux5 = 9;
-                    int aux6 = 7;
-                    int aux7 = 7;
-                    int aux8 = 9;
-                    if (listaT[f].Color.Equals("black"))
-                    {
-                        //Revision Superior
-                        if ((f - 8) < 0) //Revisa que no sea la primera fila
-                        {
-                            arr = false;
-                        }
-                        else
-                        {
-                            while (aux1 < 64)
-                            {
-                                if (listaT[f - 8].Color.Equals("black") || listaT[f - 8].Color.Equals("white"))
-                                {
-                                    aux1 = 64;
-                                    arr = false;
-                                }
-                                else
-                                {
-                                    if (f + aux1 > 63)
-                                    {
-                                        arr = false;
-                                        aux1 = 64;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f + aux1].Color.Equals("black"))
-                                        {
-                                            aux1 = aux1 + 8;
-                                        }
-                                        else if (listaT[f + aux1].Color.Equals("white"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f - 8, "gray");
-                                            listaT[f - 8] = fichaPosible;
-                                            posibles.Add(f - 8);
-                                            aux1 = 64;
-                                        }
-                                        else
-                                        {
-                                            aux1 = 64;
-                                            arr = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior
-                        if ((f + 8) > 63) //Revisa que no sea la ultima fila
-                        {
-                            ab = false;
-                        }
-                        else
-                        {
-                            while (aux2 <= 63)
-                            {
-                                if (listaT[f + 8].Color.Equals("black") || listaT[f + 8].Color.Equals("white"))
-                                {
-                                    aux2 = 64;
-                                    ab = false;
-                                }
-                                else
-                                {
-                                    if (f - aux2 < 0)
-                                    {
-                                        aux2 = 64;
-                                        ab = false;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f - aux2].Color.Equals("black"))
-                                        {
-                                            aux2 = aux2 + 8;
-                                        }
-                                        else if (listaT[f - aux2].Color.Equals("white"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f + 8, "gray");
-                                            listaT[f + 8] = fichaPosible;
-                                            posibles.Add(f + 8);
-                                            aux2 = 64;
-                                        }
-                                        else
-                                        {
-                                            aux2 = 64;
-                                            ab = false;
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                        //Revision Izquierda
-                        int ayudante1 = f, contador1 = 0;
-                        while (ayudante1 > 7)
-                        {
-                            ayudante1 = ayudante1 - 8;
-                            contador1++;
-                        }
-                        if ((ayudante1 - 1) < 0)
-                        {
-                            izq = false;
-                        }
-                        else
-                        {
-                            while (ayudante1 <= 7)
-                            {
-                                if (listaT[f - 1].Color.Equals("black") || listaT[f - 1].Color.Equals("white"))
-                                {
-                                    ayudante1 = 8;
-                                    izq = false;
-                                }
-                                else
-                                {
-                                    if (f + aux3 > 63)
-                                    {
-                                        ayudante1 = 8;
-                                        izq = false;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f + aux3].Color.Equals("black"))
-                                        {
-                                            aux3 = aux3 + 1;
-                                        }
-                                        else if (listaT[f + aux3].Color.Equals("white"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f - 1, "gray");
-                                            listaT[f - 1] = fichaPosible;
-                                            posibles.Add(f - 1);
-                                            ayudante1 = 8;
-                                        }
-                                        else
-                                        {
-                                            ayudante1 = 8;
-                                            ab = false;
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                        //Revision Derecha
-                        int ayudante2 = f, contador2 = 0;
-                        while (ayudante2 > 7)
-                        {
-                            ayudante2 = ayudante2 - 8;
-                            contador2++;
-                        }
-                        if ((ayudante2 + 1) > 7)
-                        {
-                            der = false;
-                        }
-                        else
-                        {
-                            while (ayudante2 >= 0)
-                            {
-                                if (listaT[f + 1].Color.Equals("black") || listaT[f + 1].Color.Equals("white"))
-                                {
-                                    ayudante2 = -1;
-                                    der = false;
-                                }
-                                else
-                                {
-                                    if (f - aux4 < 0)
-                                    {
-                                        ayudante2 = -1;
-                                        der = false;
-                                    }
-                                    else
-                                    {
-                                        if (listaT[f - aux4].Color.Equals("black"))
-                                        {
-                                            aux4 = aux4 + 1;
-                                        }
-                                        else if (listaT[f - aux4].Color.Equals("white"))
-                                        {
-                                            PartidaIndividual fichaPosible = new PartidaIndividual(f + 1, "gray");
-                                            listaT[f + 1] = fichaPosible;
-                                            posibles.Add(f + 1);
-                                            ayudante2 = -1;
-                                        }
-                                        else
-                                        {
-                                            ayudante2 = -1;
-                                            der = false;
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                        //Revision Superior Izquierda
-                        if ((f - 9) < 0)
-                        {
-                            supizq = false;
-                        }
-                        else
-                        {
-                            if ((f) == 8 || (f) == 16 || (f) == 24 || (f) == 32 || (f) == 40 || (f) == 48 || (f) == 56)
-                            {
-                                supizq = false;
-                            }
-                            else
-                            {
-                                while (aux5 >= 0)
-                                {
-                                    if (listaT[f - 9].Color.Equals("black") || listaT[f - 9].Color.Equals("white"))
-                                    {
-                                        supizq = false;
-                                        aux5 = -1;
-                                    }
-                                    else
-                                    {
-                                        if (f + aux5 > 63)
-                                        {
-                                            supizq = false;
-                                            aux5 = -1;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f + aux5].Color.Equals("black"))
-                                            {
-                                                aux5 = aux5 + 9;
-                                            }
-                                            else if (listaT[f + aux5].Color.Equals("white"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f - 9, "gray");
-                                                listaT[f - 9] = fichaPosible;
-                                                posibles.Add(f - 9);
-                                                aux5 = -1;
-                                            }
-                                            else
-                                            {
-                                                aux5 = -1;
-                                                supizq = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Superior Derecha
-                        if ((f - 7) <= 0)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f) == 15 || (f) == 23 || (f) == 31 || (f - 7) == 39 || (f - 7) == 47 || (f - 7) == 55 || f+aux6>63)
-                            {
-                                supder = false;
-                            }
-                            else
-                            {
-                                while (aux6 >= 0)
-                                {
-                                    if (listaT[f - 7].Color.Equals("black") || listaT[f - 7].Color.Equals("white"))
-                                    {
-                                        supder = false;
-                                        aux6 = -1;
-                                    }
-                                    else
-                                    {
-                                        if (f + aux6 > 63)
-                                        {
-                                            supder = false;
-                                            aux6 = -1;
-
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f + aux6].Color.Equals("black"))
-                                            {
-                                                aux6 = aux6 + 7;
-                                            }
-                                            else if (listaT[f + aux6].Color.Equals("white"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f - 7, "gray");
-                                                listaT[f - 7] = fichaPosible;
-                                                posibles.Add(f - 7);
-                                                aux6 = -1;
-                                            }
-                                            else
-                                            {
-                                                aux6 = -1;
-                                                supder = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior Izquierda
-                        if (f >= 56)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f + 7) == 7 || (f + 7) == 15 || (f + 7) == 23 || (f + 7) == 31 || (f + 7) == 39 || (f + 7) == 47 || (f + 7) == 55)
-                            {
-                                infeizq = false;
-                            }
-                            else
-                            {
-                                while (aux7 < 64)
-                                {
-                                    if (listaT[f + 7].Color.Equals("black") || listaT[f + 7].Color.Equals("white"))
-                                    {
-                                        infeizq = false;
-                                        aux7 = 64;
-                                    }
-                                    else
-                                    {
-                                        if (f - aux7 < 0)
-                                        {
-                                            infeizq = false;
-                                            aux7 = 64;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f - aux7].Color.Equals("black"))
-                                            {
-                                                aux7 = aux7 + 7;
-                                            }
-                                            else if (listaT[f - aux7].Color.Equals("white"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f + 7, "gray");
-                                                listaT[f + 7] = fichaPosible;
-                                                posibles.Add(f + 7);
-                                                aux7 = 64;
-                                            }
-                                            else
-                                            {
-                                                aux7 = 64;
-                                                infeizq = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Revision Inferior Derecha
-                        if (f >= 56)
-                        {
-                            supder = false;
-                        }
-                        else
-                        {
-                            if ((f) == 7 || (f) == 15 || (f) == 23 || (f) == 31 || (f) == 39 || (f) == 47 || (f) == 55)
-                            {
-                                infeder = false;
-                            }
-                            else
-                            {
-                                while (aux8 < 64)
-                                {
-                                    if (listaT[f + 9].Color.Equals("black") || listaT[f + 9].Color.Equals("white"))
-                                    {
-                                        infeder = false;
-                                        aux8 = 64;
-                                    }
-                                    else
-                                    {
-                                        if (f - aux8 < 0)
-                                        {
-                                            infeder = false;
-                                            aux8 = 64;
-                                        }
-                                        else
-                                        {
-                                            if (listaT[f - aux8].Color.Equals("black"))
-                                            {
-                                                aux8 = aux8 + 9;
-                                            }
-                                            else if (listaT[f - aux8].Color.Equals("white"))
-                                            {
-                                                PartidaIndividual fichaPosible = new PartidaIndividual(f + 9, "gray");
-                                                listaT[f + 9] = fichaPosible;
-                                                posibles.Add(f + 9);
-                                                aux8 = 64;
-                                            }
-                                            else
-                                            {
-                                                aux8 = 64;
-                                                infeder = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (arr == true || ab == true || der == true || izq == true || supizq == true || supder == true || infeizq == true || infeder == true)
-                        {
-                            TempData["Color"] = "white";
-                        }
-                    }
-                    
-
+                    blancas = true;
+                    return blancas;
                 }
-                TempData["Color"] = "white";
+                else
+                {
+                    return blancas;
+                }
             }
         }
 
+        public int PosiblesBlancas()
+        {
+
+            return 1;
+        }
         public void contaPunteo()
         {
 

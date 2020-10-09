@@ -116,35 +116,42 @@
 
 #posicion {
     position: relative;
-    top: 50px;
+    top: 90px;
     left: 60px;
+    height: 180px;
+}
+#posicion2 {
+    position: absolute;
+    top: 260px;
+    left: 260px;
     height: 180px;
 }
 #contenedor {
     position: absolute;
-    top: 5px;
     left: 90px;
-    padding-left: 15px;
-    height: 50px;
-    width: 50px;
-}
-.borde-puntaje {
-    border-top-width: 20px;
+    height: 60px;
+    width: 60px;
 }
 #tablero2 {
+    border-radius: 50px;
     background: gray;
     position: absolute;
     top: 50px;
     left: 700px;
     width: 600px;
-    height: 500px;
+    height: 400px;
 }
 .marron {
     background: linear-gradient(270deg, rgba(100,0,0,1) 0%, rgba(54,25,12,1) 52%, rgba(100,0,0,1) 97%);
+    position: absolute;
+    left: 15px; 
     height: 60px;
     width: 600px;
-
 }
+.borde1 {
+    border-radius: 50px 50px 0px 0px;
+}
+
 
 .active{
     background:red;
@@ -158,4 +165,7 @@ button.btn:active{
 }
 .borde {
     box-shadow: inset 0 0 0 50px;
+}
+#footer {
+    width:100px;
 }

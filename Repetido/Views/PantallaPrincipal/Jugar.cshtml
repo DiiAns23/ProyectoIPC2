@@ -1,4 +1,5 @@
-﻿    @{
+﻿@model Repetido.Models.Modelos.PartidaIndividual
+@{
     ViewBag.Title = "Jugar";
 }
 @section Image{
@@ -6,7 +7,6 @@
 }
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/MyStyles.css" />
     <link rel="stylesheet" href="~/Content/MyStyles2.css" />
 
@@ -18,11 +18,44 @@
         </nav>
     </header>
     <header>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content coffe tipo-letra text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title align-content-center" id="exampleModalLongTitle">JUGADOR 2</h5>
+                        <button  class="close red redondear" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                @Html.LabelFor(Jugador2 => Jugador2.Jugador2, "NOMBRE")
+                                @Html.TextBoxFor(Jugador2 => Jugador2.Jugador2, "", new { @class = "form-control" })
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                            </div>
+                            <div class="col">
+                                <a href="~/PantallaPrincipal/Individual" class="btn blue tipo-letra text-white">ACEPTAR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row align-content-lg-center justify-content-center" style="height:60vh">
             <div class="col col-sm-4">
                 <br />
                 <div>
-                    <a href="~/PantallaPrincipal/Individual" class="btn btn-block coffe redondear btn-outline-warning"><h2 class="text-white align-content-center ">INDIVIDUAL</h2>
+                    <a class="btn btn-block coffe redondear btn-outline-warning" data-toggle="modal" data-target="#exampleModalCenter">
+                        <h2 class="text-white align-content-center ">INDIVIDUAL</h2>
                     </a>
                 </div>
                 <br />
@@ -35,26 +68,26 @@
             </div>
         </div>
     </header>
-    <nav class="container">
+    
+    <nav>
         <br />
         <footer>
-            <nav class="row-cols-md-6 navbar navbar-default navbar-fixed-bottom navbar-inverse green2 font-monospace borde-amarillo2">
-                <div class="container-fluid navbar-left">
-                    <h1 class="align-content-lg-end tipo-letra text-white">OTHELLO</h1>
+            <nav class="navbar fixed-bottom nav navbar-collapse borde-amarillo green2" >
+                <div class="col">
+                    <h1 class=" tipo-letra text-white">OTHELLO</h1>
                 </div>
-                <div class="container-fluid">
-                    <h2 class="tipo-letra text-white" style="margin-bottom:5px">JUGAR</h2>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">JUGAR</h1>
                 </div>
-                <div class="container-fluid">
-                    <a href="~/PantallaPrincipal/Torneo"></a>
-                    <h2 class="text-white tipo-letra text-white">TORNEO</h2>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">TORNEOS</h1>
                 </div>
-                <div class="container-fluid">
-                    <a href="~/PantallaPrincipal/Historial"></a>
-                    <h2 class="text-white tipo-letra text-white">HISTORIAL</h2>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">HISTORIAL</h1>
                 </div>
             </nav>
         </footer>
     </nav>
-
 </body>
+
+

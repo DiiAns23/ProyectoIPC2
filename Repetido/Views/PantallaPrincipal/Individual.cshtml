@@ -87,7 +87,7 @@
 
         <div class="col">
             <div id="tablero2">
-                <div class="row marron">
+                <div class="row marron borde1">
                     @{ string[] punteo = { " ", " ", " ", "P", "U", "N", "T", "E", "O" };
                         <div class="fila font-weight-bold">
                             @for (int x = 0; x < punteo.Length; x++)
@@ -112,8 +112,8 @@
                             }
                         }
                     }
-                    <div class="col" id="posicion">
-                        <div class="row">
+                    <div class="col" >
+                        <div class="row" id="posicion">
                             <div class="col align-content-center">
                                 <div class="fichas2 black">
                                 </div>
@@ -121,8 +121,8 @@
                             <div class="col puntaje green2" id="contenedor">@negras</div>
                         </div>
                     </div>
-                    <div class="col" id="posicion">
-                        <div class="row">
+                    <div class="col">
+                        <div class="row" id="posicion">
                             <div class="col align-content-center">
                                 <div class="fichas2 white">
                                 </div>
@@ -134,7 +134,7 @@
 
                 </div>
                 <div class="row marron border-0">
-                    @{ string[] turno = { " ", " ", " ", " ", "T", "U", "R", "N", "O" };
+                    @{ string[] turno = { " ", " ", " ","T", "U", "R", "N", "O" };
                         <div class="fila font-weight-bold">
                             @for (int x = 0; x < turno.Length; x++)
                             {
@@ -144,9 +144,9 @@
                     }
                 </div>
                 <div class="row">
-                    <div class="col" id="posicion">
-                        <div class="row">
-                            <div class="col align-content-center">
+                    <div class="col" >
+                        <div class="row" id="posicion2">
+                            <div class=" align-content-center">
                                 @if (TempData["Color"].Equals("black"))
                                 {
                                     <div class="fichas2 black"></div>

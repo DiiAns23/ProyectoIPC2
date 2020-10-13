@@ -13,10 +13,10 @@ namespace Repetido.Models.Modelos
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BaseDatos1 : DbContext
+    public partial class BaseDatos2 : DbContext
     {
-        public BaseDatos1()
-            : base("name=BaseDatos1")
+        public BaseDatos2()
+            : base("name=BaseDatos2")
         {
         }
     
@@ -29,6 +29,7 @@ namespace Repetido.Models.Modelos
         public virtual DbSet<Jugador> Jugador { get; set; }
         public virtual DbSet<Pais> Pais { get; set; }
         public virtual DbSet<Partida> Partida { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Torneo> Torneo { get; set; }
     }
 }

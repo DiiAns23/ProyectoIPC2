@@ -18,53 +18,155 @@
         </nav>
     </header>
     <header>
-        <!-- Modal -->
+
+        <!-- Modal MultiPlayer -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content coffe tipo-letra text-white">
                     <div class="modal-header">
                         <h5 class="modal-title align-content-center" id="exampleModalLongTitle">JUGADOR 2</h5>
-                        <button  class="close red redondear" data-dismiss="modal" aria-label="Close">
+                        <button class="close red redondear" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                @Html.LabelFor(Jugador2 => Jugador2.Jugador2, "NOMBRE")
-                                @Html.TextBoxFor(Jugador2 => Jugador2.Jugador2, "", new { @class = "form-control" })
+                    @using (Html.BeginForm("Individual", "PantallaPrincipal", FormMethod.Post))
+                    {<form method="post">
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(Jugador2 => Jugador2.Jugador2, "NOMBRE:")
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control" name="nombre" placeholder="Jugador 2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        @Html.LabelFor(ColorJ2 => ColorJ2.ColorJ2, "COLOR:")
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Blanco</label>
+                                                <input type="radio" name="color" value="Blanco" />
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Negro</label>
+                                                <input type="radio" name="color" value="Negro" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                    </div>
+
+                                    <div class="col">
+                                        <button type="submit" class="btn blue tipo-letra text-white">ACEPTAR</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <!--Modal Cargar-->
+        <div class="modal fade" id="Cargar" tabindex="-1" role="dialog" aria-labelledby="Cargar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content coffe tipo-letra text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title align-content-center" id="exampleModalLongTitle">JUGADOR 2</h5>
+                        <button class="close red redondear" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="modal-footer">
-                        <div class="row">
-                            <div class="col">
-                                <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                    @using (Html.BeginForm("Upload", "PantallaPrincipal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <form method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        @Html.LabelFor(Jugador2 => Jugador2.Jugador2, "NOMBRE:")
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control" name="nombre" placeholder="Jugador 2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        @Html.LabelFor(ColorJ2 => ColorJ2.ColorJ2, "COLOR:")
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Blanco</label>
+                                                <input type="radio" name="color2" value="Blanco" />
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Negro</label>
+                                                <input type="radio" name="color2" value="Negro" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="form-control verdecitochido btn-block" type="file" name="path" accept=".xml" />
+                                        </div>
+                                        <div class="col">
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="col">
-                                <a href="~/PantallaPrincipal/Individual" class="btn blue tipo-letra text-white">ACEPTAR</a>
+
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn blue tipo-letra text-white">ACEPTAR</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
 
+
         <div class="row align-content-lg-center justify-content-center" style="height:60vh">
             <div class="col col-sm-4">
                 <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <div>
-                    <a class="btn btn-block coffe redondear btn-outline-warning" data-toggle="modal" data-target="#exampleModalCenter">
-                        <h2 class="text-white align-content-center ">INDIVIDUAL</h2>
-                    </a>
+                    @using (Html.BeginForm("Individual", "Local"))
+                    {
+                        <button type="submit" class="btn btn-block coffe redondear btn-outline-warning"><h2 class="text-white align-content-center ">INDIVIDUAL</h2></button>
+                    }
                 </div>
                 <br />
                 <br />
                 <br />
                 <div>
-                    <a class="btn btn-block coffe redondear btn-outline-warning"><h2 class="text-white align-content-center ">MULTIJUGADOR</h2></a>
+                    <a class="btn btn-block coffe redondear btn-outline-warning" data-toggle="modal" data-target="#exampleModalCenter"><h2 class="text-white align-content-center ">MULTIJUGADOR</h2></a>
                 </div>
                 <br />
+                <br />
+                <br />
+                <div>
+                    <a class="btn btn-block coffe redondear btn-outline-warning" data-toggle="modal" data-target="#Cargar"><h2 class="text-white align-content-center ">CARGAR</h2></a>
+                </div>
             </div>
         </div>
     </header>

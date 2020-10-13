@@ -47,8 +47,9 @@
     text-transform: uppercase;
     float: left;
 }
+
 .fichas {
-    width: 48px;
+    width: 48px; 
     height: 48px;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -78,7 +79,7 @@
 
 #tablero {
     background: linear-gradient(270deg, rgba(0,0,0,1) 0%, rgba(69,69,69,1) 52%, rgba(0,0,0,1) 97%);
-    position:absolute;
+    position: absolute;
     top: 50px;
     left: 100px;
     width: 500px;
@@ -93,6 +94,14 @@
     color: white;
     font-family: times;
     border: black 0.5px solid;
+}
+
+#posicionBotonoes {
+    position: absolute;
+    top: 450px;
+    left: 950px;
+    width: 200px;
+    height: 200px;
 }
 
 .puntaje {
@@ -118,11 +127,11 @@
     position: relative;
     top: 90px;
     left: 60px;
-    height: 180px;
+    height: 200px;
 }
 #posicion2 {
     position: absolute;
-    top: 260px;
+    top: 270px;
     left: 260px;
     height: 180px;
 }
@@ -139,12 +148,12 @@
     top: 50px;
     left: 700px;
     width: 600px;
-    height: 400px;
+    height: 350px;
 }
 .marron {
     background: linear-gradient(270deg, rgba(100,0,0,1) 0%, rgba(54,25,12,1) 52%, rgba(100,0,0,1) 97%);
     position: absolute;
-    left: 15px; 
+    left: 12px; 
     height: 60px;
     width: 600px;
 }

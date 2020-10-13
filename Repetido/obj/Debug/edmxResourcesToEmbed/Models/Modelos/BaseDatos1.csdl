@@ -27,7 +27,6 @@
     <NavigationProperty Name="Bloqueo" Relationship="Self.FK_Bloqueado" FromRole="Jugador" ToRole="Bloqueo" />
     <NavigationProperty Name="Bloqueo1" Relationship="Self.FK_Jugador" FromRole="Jugador" ToRole="Bloqueo" />
     <NavigationProperty Name="Partida" Relationship="Self.FK_Jugador1" FromRole="Jugador" ToRole="Partida" />
-    <NavigationProperty Name="Partida1" Relationship="Self.FK_Jugador2" FromRole="Jugador" ToRole="Partida" />
     <NavigationProperty Name="Pais" Relationship="Self.FK_Pais" FromRole="Jugador" ToRole="Pais" />
   </EntityType>
   <EntityType Name="Pais">
@@ -46,14 +45,22 @@
     <Property Name="Id_Partida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
     <Property Name="Id_Jugador1" Type="Int32" Nullable="false" />
-    <Property Name="Id_Jugador2" Type="Int32" Nullable="false" />
     <Property Name="Id_Torneo" Type="Int32" Nullable="false" />
-    <Property Name="Ganador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Jugador" Relationship="Self.FK_Jugador1" FromRole="Partida" ToRole="Jugador" />
-    <NavigationProperty Name="Jugador1" Relationship="Self.FK_Jugador2" FromRole="Partida" ToRole="Jugador" />
-    <NavigationProperty Name="Torneo" Relationship="Self.FK_Torneo" FromRole="Partida" ToRole="Torneo" />
     <Property Name="Punteo" Type="Int32" />
     <Property Name="Movimiento" Type="Int32" />
+    <Property Name="Ganador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Jugador" Relationship="Self.FK_Jugador1" FromRole="Partida" ToRole="Jugador" />
+    <NavigationProperty Name="Torneo" Relationship="Self.FK_Torneo" FromRole="Partida" ToRole="Torneo" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="Torneo">
     <Key>
@@ -102,18 +109,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Jugador2">
-    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
-    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Jugador">
-        <PropertyRef Name="Id_Jugador" />
-      </Principal>
-      <Dependent Role="Partida">
-        <PropertyRef Name="Id_Jugador2" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Pais">
     <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
     <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
@@ -138,11 +133,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="BaseDatos1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="BaseDatos2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Bloqueo" EntityType="Self.Bloqueo" />
     <EntitySet Name="Jugador" EntityType="Self.Jugador" />
     <EntitySet Name="Pais" EntityType="Self.Pais" />
     <EntitySet Name="Partida" EntityType="Self.Partida" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" />
     <AssociationSet Name="FK_Bloqueado" Association="Self.FK_Bloqueado">
       <End Role="Jugador" EntitySet="Jugador" />
@@ -153,10 +149,6 @@
       <End Role="Bloqueo" EntitySet="Bloqueo" />
     </AssociationSet>
     <AssociationSet Name="FK_Jugador1" Association="Self.FK_Jugador1">
-      <End Role="Jugador" EntitySet="Jugador" />
-      <End Role="Partida" EntitySet="Partida" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Jugador2" Association="Self.FK_Jugador2">
       <End Role="Jugador" EntitySet="Jugador" />
       <End Role="Partida" EntitySet="Partida" />
     </AssociationSet>

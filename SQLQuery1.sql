@@ -23,7 +23,6 @@ Create Table Jugador
 	Pass varchar(100) not null,
 	Confirm_Pass varchar(100) not null,
 	Id_Torneo int,
-	Id_Partida int	
 	constraint FK_Pais foreign key (Id_Pais) references Pais(Id_Pais),
 ); 
 
@@ -52,16 +51,16 @@ Create Table Partida
 	Tipo varchar(20)
 		Check(Tipo in('Solitario', 'Multijugador')),
 	Id_Jugador1 int not null,
-	Id_Jugador2 int not null,
-	Id_Torneo int not null
-
+	Id_Torneo int not null,
+	Punteo int,
+	Movimiento int,
+	Ganador varchar(20),
 	constraint FK_Jugador1 foreign key (Id_Jugador1) references Jugador(Id_Jugador),
-	constraint FK_Jugador2 foreign key (Id_Jugador2) references Jugador(Id_Jugador),
-	constraint FK_Torneo foreign key (Id_Torneo) references Torneo(Id_Torneo)	
 );
 
 Truncate Table Jugador;
 select*from Jugador
+select*from Partida
 
 select*from Pais
 

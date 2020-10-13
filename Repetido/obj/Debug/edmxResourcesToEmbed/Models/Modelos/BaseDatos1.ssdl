@@ -38,11 +38,20 @@
     <Property Name="Id_Partida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Tipo" Type="varchar" MaxLength="20" />
     <Property Name="Id_Jugador1" Type="int" Nullable="false" />
-    <Property Name="Id_Jugador2" Type="int" Nullable="false" />
     <Property Name="Id_Torneo" Type="int" Nullable="false" />
     <Property Name="Punteo" Type="int" />
     <Property Name="Movimiento" Type="int" />
     <Property Name="Ganador" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="Torneo">
     <Key>
@@ -90,18 +99,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Jugador2">
-    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
-    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Jugador">
-        <PropertyRef Name="Id_Jugador" />
-      </Principal>
-      <Dependent Role="Partida">
-        <PropertyRef Name="Id_Jugador2" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Pais">
     <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
     <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
@@ -114,23 +111,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Torneo">
-    <End Role="Torneo" Type="Self.Torneo" Multiplicity="1" />
-    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Torneo">
-        <PropertyRef Name="Id_Torneo" />
-      </Principal>
-      <Dependent Role="Partida">
-        <PropertyRef Name="Id_Torneo" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="ProyectoModelStoreContainer">
     <EntitySet Name="Bloqueo" EntityType="Self.Bloqueo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Jugador" EntityType="Self.Jugador" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Partida" EntityType="Self.Partida" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Bloqueado" Association="Self.FK_Bloqueado">
       <End Role="Jugador" EntitySet="Jugador" />
@@ -144,17 +130,9 @@
       <End Role="Jugador" EntitySet="Jugador" />
       <End Role="Partida" EntitySet="Partida" />
     </AssociationSet>
-    <AssociationSet Name="FK_Jugador2" Association="Self.FK_Jugador2">
-      <End Role="Jugador" EntitySet="Jugador" />
-      <End Role="Partida" EntitySet="Partida" />
-    </AssociationSet>
     <AssociationSet Name="FK_Pais" Association="Self.FK_Pais">
       <End Role="Pais" EntitySet="Pais" />
       <End Role="Jugador" EntitySet="Jugador" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Torneo" Association="Self.FK_Torneo">
-      <End Role="Torneo" EntitySet="Torneo" />
-      <End Role="Partida" EntitySet="Partida" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

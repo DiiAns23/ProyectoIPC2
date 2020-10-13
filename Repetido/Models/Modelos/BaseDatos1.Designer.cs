@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\diego\Desktop\Repetido\Repetido\Models\Modelos\Model1.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\Models\Modelos\BaseDatos1.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

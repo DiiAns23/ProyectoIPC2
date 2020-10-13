@@ -12,17 +12,12 @@ namespace Repetido.Models.Modelos
     using System;
     using System.Collections.Generic;
     
-    public partial class Partida
+    public partial class sysdiagrams
     {
-        public int Id_Partida { get; set; }
-        public string Tipo { get; set; }
-        public int Id_Jugador1 { get; set; }
-        public int Id_Torneo { get; set; }
-        public Nullable<int> Punteo { get; set; }
-        public Nullable<int> Movimiento { get; set; }
-        public string Ganador { get; set; }
-    
-        public virtual Jugador Jugador { get; set; }
-        public virtual Torneo Torneo { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

@@ -20,7 +20,6 @@ namespace Repetido.Models.Modelos
             this.Bloqueo = new HashSet<Bloqueo>();
             this.Bloqueo1 = new HashSet<Bloqueo>();
             this.Partida = new HashSet<Partida>();
-            this.Partida1 = new HashSet<Partida>();
         }
     
         public int Id_Jugador { get; set; }
@@ -40,8 +39,6 @@ namespace Repetido.Models.Modelos
         public virtual ICollection<Bloqueo> Bloqueo1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Partida> Partida { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Partida> Partida1 { get; set; }
         public virtual Pais Pais { get; set; }
     }
 }

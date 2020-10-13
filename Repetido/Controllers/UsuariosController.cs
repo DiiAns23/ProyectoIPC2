@@ -14,7 +14,7 @@ namespace Repetido.Controllers
         public ActionResult Registrar()
         {
             List<PaisViewModel> ListaPais;
-            using (BaseDatos1 db = new BaseDatos1())
+            using (BaseDatos2 db = new BaseDatos2())
             {
                 ListaPais = (from dato in db.Pais
                              select new PaisViewModel
@@ -32,7 +32,7 @@ namespace Repetido.Controllers
         public ActionResult Registrar(RegistrarViewModel model)
         {
             List <PaisViewModel> ListaPais;
-            using (BaseDatos1 db = new BaseDatos1())
+            using (BaseDatos2 db = new BaseDatos2())
             {
                 ListaPais = (from dato in db.Pais
                              select new PaisViewModel
@@ -46,7 +46,7 @@ namespace Repetido.Controllers
             ViewBag.Paises = ListaPais;
             if (ModelState.IsValid)
             {
-                using (BaseDatos1 db = new BaseDatos1())
+                using (BaseDatos2 db = new BaseDatos2())
                 {
                     var user = db.Jugador.FirstOrDefault(dato => dato.Nombre_Usuario == model.Usuario);
                     var correo = db.Jugador.FirstOrDefault(dato => dato.Correo == model.Correo_electronico);
@@ -61,8 +61,8 @@ namespace Repetido.Controllers
                                 Usuario.Apellidos_Jugador = model.Apellido;
                                 Usuario.Nombre_Usuario = model.Usuario;
                                 Usuario.Correo = model.Correo_electronico;
-                                Usuario.Pass = Encrypt.GetSHA256(model.contaseña);
-                                Usuario.Confirm_Pass = Encrypt.GetSHA256(model.recontaseña);
+                                Usuario.Pass = model.contaseña;
+                                Usuario.Confirm_Pass =model.recontaseña;
                                 Usuario.Id_Pais = model.codigo_pais;
                                 db.Jugador.Add(Usuario);
                                 db.SaveChanges();

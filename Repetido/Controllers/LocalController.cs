@@ -11,7 +11,7 @@ using Repetido.Controllers;
 namespace Repetido.Controllers
 {
     [Authorize]
-    public class PantallaPrincipalController : Controller
+    public class LocalController : Controller
     {
         static List<PartidaIndividual> listaT = new List<PartidaIndividual>();
         static List<PartidaIndividual> listaC = new List<PartidaIndividual>();
@@ -23,56 +23,16 @@ namespace Repetido.Controllers
         static bool respuesta, fin = false;
         static int TirosNegros = 0;
         static int TirosBlancos = 0;
-        public ActionResult PantallaPrincipal()
-        {
-            return View();
-        }
-        public ActionResult Jugar()
-        {
-            return View();
-        }
-        public ActionResult Torneo()
-        {
-            return View();
-        }
-        public ActionResult Historial()
-        {
-            return View();
-        }
+        
         public ActionResult Individual()
         {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Individual(string nombre, string color)
-        {
             J1 = LoginController.user;
+            J2 = "Zero Machine";
             TempData["J1"] = J1;
-            if (nombre != null && color!=null)
-            {
-                J2 = nombre;
-                TempData["J2"] = J2;
-                if (color == "Blanco")
-                {
-                    C2 = "white";
-                    TempData["C2"] = C2;
-                    TempData["C1"] = "black";
-                }
-                else
-                {
-                    C2 = "black";
-                    TempData["C2"] = C2;
-                    TempData["C1"] = "white";
-                }
-            }
-            else
-            {
-                J2 = "Invitado";
-                C2 = "white";
-                TempData["C1"] = "black";
-                TempData["J2"] = J2;
-                TempData["C2"] = C2;
-            }
+            C1 = "black";
+            C2 = "white";
+            TempData["C1"] = C1;
+            TempData["C2"] = C2;
             TempData["title"] = "Individual";
             for (int i = 0; i < 64; i++)
             {
@@ -95,12 +55,12 @@ namespace Repetido.Controllers
             TempData["Color"] = "black";
             TempData["TirosBlancos"] = 0;
             TempData["TirosNegros"] = 0;
-            TempData["Fin"] = false;
             return View(listaT);
         }
 
         public ActionResult Change(int io)
         {
+            int machine = 0;
             if (io != -1)
             {
                 if (TempData["Color"].Equals("black"))
@@ -109,16 +69,22 @@ namespace Repetido.Controllers
                     listaT[io] = fichaNueva;
                     TempData["Color"] = "white";
                 }
-                else
-                {
-                    PartidaIndividual fichaNueva = new PartidaIndividual(io, "white");
-                    listaT[io] = fichaNueva;
-                    TempData["Color"] = "black";
-                }
                 change2(io);
                 movimientosPosibles(io);
-
+                for(int x = 0; x<listaT.Count(); x++)
+                {
+                    if (listaT[x].Color.Equals("gray"))
+                    {
+                        machine = x;
+                    }
+                }
+                
             }
+            PartidaIndividual fichaW = new PartidaIndividual(machine, "white");
+            listaT[machine] = fichaW;
+            TempData["Color"] = "black"; 
+            change2(machine);
+            movimientosPosibles(machine);
             TempData["J1"] = J1;
             TempData["C1"] = C1;
             TempData["J2"] = J2;
@@ -143,7 +109,7 @@ namespace Repetido.Controllers
             using (BaseDatos2 db = new BaseDatos2())
             {
                 var partida = new Partida();
-                partida.Tipo = "Multijugador";
+                partida.Tipo = "Solitario";
                 partida.Id_Jugador1 = userId;
                 partida.Punteo = punteo;
                 partida.Movimiento = movimientos;
@@ -840,7 +806,7 @@ namespace Repetido.Controllers
                 respuesta = true;
 
             }
-            
+
             else
             {
                 PartidaIndividual fichaNueva = new PartidaIndividual(io2, "");
@@ -1244,7 +1210,7 @@ namespace Repetido.Controllers
                 if (TempData["Color"].Equals("black"))
                 {
                     movblancas = MovimintosPosiblesBlancas(PosiblesBlancas);
-                    if(movblancas == false)
+                    if (movblancas == false)
                     {
                         TempData["Color"] = "white";
                     }
@@ -1257,7 +1223,7 @@ namespace Repetido.Controllers
                 if (TempData["Color"].Equals("white"))
                 {
                     movnegras = MovimientosPosiblesNegras(PosiblesNegras);
-                    if(movnegras == false)
+                    if (movnegras == false)
                     {
                         TempData["Color"] = "black";
                     }
@@ -1297,7 +1263,7 @@ namespace Repetido.Controllers
                 return negras;
             }
         }
-        
+
         public Boolean MovimientosPosiblesNegras(List<int> PosiblesNegras)
         {
             bool blancas = false;
@@ -1318,476 +1284,6 @@ namespace Repetido.Controllers
             {
                 return blancas;
             }
-        }
-
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase path, string nombre, string color2)
-        {
-            J1 = LoginController.user;
-            TempData["J1"] = J1;
-            if (nombre != null && color2 != null)
-            {
-                J2 = nombre;
-                TempData["J2"] = J2;
-                if (color2 == "Blanco")
-                {
-                    C2 = "white";
-                    TempData["C2"] = C2;
-                    TempData["C1"] = "black";
-                }
-                else
-                {
-                    C2 = "black";
-                    TempData["C2"] = C2;
-                    TempData["C1"] = "white";
-                }
-            }
-            else
-            {
-                J2 = "Invitado";
-                C2 = "white";
-                TempData["C1"] = "black";
-                TempData["J2"] = J2;
-                TempData["C2"] = C2;
-            }
-            listaC.Clear();
-            listaT.Clear();
-            string sigTiro = "";
-            int io = 0;
-            for (int x = 0; x < 64; x++)
-            {
-                PartidaIndividual vaciar = new PartidaIndividual(x);
-                listaC.Add(vaciar);
-
-            }
-            string ruta;
-            
-            Cargar cargar = new Cargar();
-            if (path != null)
-            {
-                ruta = Server.MapPath("~/Temporal/");  // C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\Temporal\
-                ruta += path.FileName; // C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\Temporal\DiiAns23.xml
-                cargar.CargarArchivo(ruta, path);
-                XmlDocument partida = new XmlDocument();
-                partida.Load(ruta); //  C:\Users\diego\Downloads\[IPC2]Proyecto1_Entregable2_201903865\Repetido\Temporal\DiiAns23.xml
-                foreach (XmlNode xmlNode in partida.DocumentElement.ChildNodes)
-                {
-                    string color = "";
-                    string columna = "";
-                    string fila = "";
-                    foreach (XmlNode xmlNodeItem in xmlNode.ChildNodes)
-                    {
-                        if (xmlNodeItem.Name.Equals("color"))
-                        {
-                            color = xmlNodeItem.InnerText;
-                            if (color == "blanco")
-                            {
-                                color = "white";
-                            }
-                            else if (color == "negro")
-                            {
-                                color = "black";
-                            }
-                        }
-                        else if (xmlNodeItem.Name.Equals("columna"))
-                        {
-                            columna = xmlNodeItem.InnerText;
-                        }
-                        else if (xmlNodeItem.Name.Equals("fila"))
-                        {
-                            fila = xmlNodeItem.InnerText;
-                        }
-                        if (color != "" && columna != "" && fila != "")
-                        {
-                            if (fila == "1")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(0, color);
-                                    listaC[0] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(1, color);
-                                    listaC[1] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(2, color);
-                                    listaC[2] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(3, color);
-                                    listaC[3] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(4, color);
-                                    listaC[4] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(5, color);
-                                    listaC[5] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(6, color);
-                                    listaC[6] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(7, color);
-                                    listaC[7] = ficha;
-                                }
-                            }
-                            if (fila == "2")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(8, color);
-                                    listaC[8] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(9, color);
-                                    listaC[9] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(10, color);
-                                    listaC[10] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(11, color);
-                                    listaC[11] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(12, color);
-                                    listaC[12] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(13, color);
-                                    listaC[13] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(14, color);
-                                    listaC[14] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(15, color);
-                                    listaC[15] = ficha;
-                                }
-                            }
-                            if (fila == "3")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(16, color);
-                                    listaC[16] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(17, color);
-                                    listaC[17] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(18, color);
-                                    listaC[18] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(19, color);
-                                    listaC[19] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(20, color);
-                                    listaC[20] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(21, color);
-                                    listaC[21] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(22, color);
-                                    listaC[22] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(23, color);
-                                    listaC[23] = ficha;
-                                }
-
-                            }
-                            if (fila == "4")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(24, color);
-                                    listaC[24] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(25, color);
-                                    listaC[25] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(26, color);
-                                    listaC[26] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(27, color);
-                                    listaC[27] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(28, color);
-                                    listaC[28] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(29, color);
-                                    listaC[29] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(30, color);
-                                    listaC[30] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(31, color);
-                                    listaC[31] = ficha;
-                                }
-
-                            }
-                            if (fila == "5")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(32, color);
-                                    listaC[32] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(33, color);
-                                    listaC[33] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(34, color);
-                                    listaC[34] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(35, color);
-                                    listaC[35] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(36, color);
-                                    listaC[36] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(37, color);
-                                    listaC[37] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(38, color);
-                                    listaC[38] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(39, color);
-                                    listaC[39] = ficha;
-                                }
-
-                            }
-                            if (fila == "6")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(40, color);
-                                    listaC[40] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(41, color);
-                                    listaC[41] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(42, color);
-                                    listaC[42] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(43, color);
-                                    listaC[43] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(44, color);
-                                    listaC[44] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(45, color);
-                                    listaC[45] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(46, color);
-                                    listaC[46] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(47, color);
-                                    listaC[47] = ficha;
-                                }
-
-                            }
-                            if (fila == "7")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(48, color);
-                                    listaC[48] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(49, color);
-                                    listaC[49] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(50, color);
-                                    listaC[50] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(51, color);
-                                    listaC[51] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(52, color);
-                                    listaC[52] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(53, color);
-                                    listaC[53] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(54, color);
-                                    listaC[54] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(55, color);
-                                    listaC[55] = ficha;
-                                }
-
-                            }
-                            if (fila == "8")
-                            {
-                                if (columna == "A")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(56, color);
-                                    listaC[56] = ficha;
-                                }
-                                if (columna == "B")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(57, color);
-                                    listaC[57] = ficha;
-                                }
-                                if (columna == "C")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(58, color);
-                                    listaC[58] = ficha;
-                                }
-                                if (columna == "D")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(59, color);
-                                    listaC[59] = ficha;
-                                }
-                                if (columna == "E")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(60, color);
-                                    listaC[60] = ficha;
-                                }
-                                if (columna == "F")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(61, color);
-                                    listaC[61] = ficha;
-                                }
-                                if (columna == "G")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(62, color);
-                                    listaC[62] = ficha;
-                                }
-                                if (columna == "H")
-                                {
-                                    PartidaIndividual ficha = new PartidaIndividual(63, color);
-                                    listaC[63] = ficha;
-                                }
-
-                            }
-                        }
-                    }
-                    if (xmlNode.Name.Equals("siguienteTiro"))
-                    {
-                        foreach (XmlNode tiro in xmlNode.ChildNodes)
-                        {
-                            if (tiro.Name.Equals("color"))
-                            {
-                                sigTiro = tiro.InnerText;
-                                if (sigTiro == "negro")
-                                {
-                                    TempData["Color"] = "black";
-                                    sigTiro = "black";
-                                }
-                                else if (sigTiro == "blanco")
-                                {
-                                    TempData["Color"] = "white";
-                                    sigTiro = "white";
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            for(int y = 0; y < listaC.Count; y++)
-            {
-                PartidaIndividual carga = new PartidaIndividual(y, listaC[y].Color);
-                if (listaC[y].Color == (sigTiro))
-                {
-                    io = y;
-                }
-                listaT.Add(carga);
-            }
-            TirosNegros = 0;
-            TirosBlancos = 0;
-            TempData["TirosBlancos"] = TirosBlancos;
-            TempData["TirosNegros"] = TirosNegros;
-            movimientosPosibles(io);
-            return View("Individual", listaT);
         }
 
         [HttpPost]
@@ -1854,7 +1350,7 @@ namespace Repetido.Controllers
                     ficha.Add(new XElement("fila", fila));
                     raiz.Add(ficha);
                 }
-                
+
             }
             XElement turno = new XElement("siguienteTiro");
             if (TempData["Color"].Equals("white"))
@@ -1866,12 +1362,17 @@ namespace Repetido.Controllers
                 turno.Add(new XElement("color", "negro"));
             }
             raiz.Add(turno);
-            load.Save(path+J1+".xml");
+            load.Save(path + J1 + ".xml");
             listaT.Clear();
             TempData["Color"] = "black";
             return RedirectToAction("Jugar", "PantallaPrincipal");
         }
-
-
     }
 }
+
+
+
+
+
+
+

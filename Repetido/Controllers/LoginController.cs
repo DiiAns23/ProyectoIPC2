@@ -12,17 +12,21 @@ namespace Repetido.Controllers
 {
     public class LoginController : Controller
     {
+        public static string user = "";
+        public static int idUser = 0;
         public ActionResult Login(LoginView model)
         {
-            if (!string.IsNullOrEmpty(model.usuario) && !string.IsNullOrEmpty(Encrypt.GetSHA256(model.pass)))
+            if (!string.IsNullOrEmpty(model.usuario) && !string.IsNullOrEmpty((model.pass)))
             {
-                using (BaseDatos1 db = new BaseDatos1())
+                using (BaseDatos2 db = new BaseDatos2())
                 {
                     var usuario = db.Jugador.FirstOrDefault(dato => dato.Nombre_Usuario == model.usuario && dato.Pass == model.pass);
                     if (usuario != null)
                     {
                         //se encuentra un usuario con los datos de Usuario y Password
                         FormsAuthentication.SetAuthCookie(usuario.Nombre_Usuario, true);
+                        user = usuario.Nombre_Usuario;
+                        idUser = usuario.Id_Jugador;
                         return RedirectToAction("PantallaPrincipal", "PantallaPrincipal");
                     }
                 }
@@ -35,5 +39,6 @@ namespace Repetido.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }
+        
     }
 }

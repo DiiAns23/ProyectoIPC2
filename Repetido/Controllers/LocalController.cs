@@ -71,6 +71,11 @@ namespace Repetido.Controllers
                 }
                 change2(io);
                 movimientosPosibles(io);
+                
+                
+            }
+            while (TempData["Color"].Equals("white"))
+            {
                 for(int x = 0; x<listaT.Count(); x++)
                 {
                     if (listaT[x].Color.Equals("gray"))
@@ -78,13 +83,12 @@ namespace Repetido.Controllers
                         machine = x;
                     }
                 }
-                
+                PartidaIndividual fichaW = new PartidaIndividual(machine, "white");
+                listaT[machine] = fichaW;
+                TempData["Color"] = "black";
+                change2(machine);
+                movimientosPosibles(io);
             }
-            PartidaIndividual fichaW = new PartidaIndividual(machine, "white");
-            listaT[machine] = fichaW;
-            TempData["Color"] = "black"; 
-            change2(machine);
-            movimientosPosibles(machine);
             TempData["J1"] = J1;
             TempData["C1"] = C1;
             TempData["J2"] = J2;

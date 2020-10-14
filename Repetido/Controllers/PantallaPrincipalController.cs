@@ -337,7 +337,7 @@ namespace Repetido.Controllers
                         }
                         else
                         {
-                            if (io2 + aux3 != 8 && io2 + aux3 != 16 && io2 + aux3 != 24 && io2 + aux3 != 32 && io2 + aux3 != 40 && io2 + aux3 != 48 && io2 + aux3 != 56 && io2 + aux3 != 64)
+                            if (io2 + aux3 != 7 && io2 + aux3 != 15 && io2 + aux3 != 23 && io2 + aux3 != 31 && io2 + aux3 != 39 && io2 + aux3 != 47 && io2 + aux3 != 55 && io2 + aux3 != 63)
                             {
                                 derecha.Add(io2 + aux3);
                                 aux3 = aux3 + 1;
@@ -383,7 +383,7 @@ namespace Repetido.Controllers
         {
             int aux3 = 1;
             List<int> izquierda = new List<int>();
-            while (aux3 < 7)
+            while (aux3 <= 7)
             {
                 if (io2 - aux3 < 0 || io2 - aux3 == 7 || io2 - aux3 == 15 || io2 - aux3 == 23 || io2 - aux3 == 31 || io2 - aux3 == 39 || io2 - aux3 == 47 || io2 - aux3 == 55)
                 {
@@ -424,7 +424,7 @@ namespace Repetido.Controllers
                         }
                         else
                         {
-                            if (io2 - aux3 != 0 && io2 - aux3 != 8 && io2 - aux3 != 16 && io2 - aux3 != 24 && io2 - aux3 != 32 && io2 - aux3 != 40 && io2 - aux3 != 48 && io2 - aux3 != 56)
+                            if (io2 - aux3 >= 0 && io2 - aux3 != 8 && io2 - aux3 != 16 && io2 - aux3 != 24 && io2 - aux3 != 32 && io2 - aux3 != 40 && io2 - aux3 != 48 && io2 - aux3 != 56)
                             {
                                 izquierda.Add(io2 - aux3);
                                 aux3 = aux3 + 1;
@@ -562,7 +562,8 @@ namespace Repetido.Controllers
             int aux5 = 7;
             while (aux5 <= 56)
             {
-                if (io2 - aux5 <= 0 || io2 - aux5 == 1 || io2 - aux5 == 8 || io2 - aux5 == 16 || io2 - aux5 == 24 || io2 - aux5 == 32 || io2 - aux5 == 40 || io2 - aux5 == 56)
+                if (io2 - aux5 <= 0 || io2 - aux5 == 1 || io2 - aux5 == 7 || io2 - aux5 == 15 || io2 - aux5 == 23 || io2 - aux5 == 31 || io2 - aux5 == 39 || io2 - aux5 == 55
+                    || io2 - aux5 == 56 || io2 - aux5 == 48 || io2 - aux5 == 40 || io2 - aux5 == 32 || io2 - aux5 == 24 || io2 - aux5 == 16 || io2 - aux5 == 8 || io2 - aux5 == 0)
                 {
                     if (superiorderecha.Count() == 0)
                     {
@@ -1181,7 +1182,7 @@ namespace Repetido.Controllers
                         if (listaT[listafichas[x] + 9].Color != ("black") && listaT[listafichas[x] + 9].Color != ("white"))
                         {
                             bool cerrarciclo = false;
-                            while (listafichas[x] - aux1 > 0 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color && cerrarciclo == false)
+                            while (listafichas[x] - aux1 >= 0 && listaT[listafichas[x] - aux1].Color == listaT[listafichas[x]].Color && cerrarciclo == false)
                             {
                                 if (listafichas[x] - aux1 == 8 || listafichas[x] - aux1 == 16 || listafichas[x] - aux1 == 24 || listafichas[x] - aux1 == 32 || listafichas[x] - aux1 == 40
                                 || listafichas[x] - aux1 == 48 || listafichas[x] - aux1 == 56)

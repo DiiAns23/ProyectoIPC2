@@ -7,12 +7,14 @@ using Repetido.Models.Modelos;
 using System.Xml.Linq;
 using System.Xml;
 using Repetido.Controllers;
+using System.Diagnostics;
 
 namespace Repetido.Controllers
 {
     [Authorize]
     public class PantallaPrincipalController : Controller
     {
+        
         static List<PartidaIndividual> listaT = new List<PartidaIndividual>();
         static List<PartidaIndividual> listaC = new List<PartidaIndividual>();
         static List<int> posibles = new List<int>();
@@ -23,6 +25,7 @@ namespace Repetido.Controllers
         static bool respuesta, fin = false;
         static int TirosNegros = 0;
         static int TirosBlancos = 0;
+
         public ActionResult PantallaPrincipal()
         {
             return View();
@@ -162,6 +165,7 @@ namespace Repetido.Controllers
                 db.Partida.Add(partida);
                 db.SaveChanges();
             }
+            listaT.Clear();
             listaT.Clear();
             return RedirectToAction("Jugar", "PantallaPrincipal");
         }

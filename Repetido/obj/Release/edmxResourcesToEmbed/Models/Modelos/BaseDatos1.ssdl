@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProyectoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bloqueo">
+    <Key>
+      <PropertyRef Name="Id_Bloqueo" />
+    </Key>
+    <Property Name="Id_Bloqueo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Jugador" Type="int" Nullable="false" />
+    <Property Name="Id_Bloqueado" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Jugador">
+    <Key>
+      <PropertyRef Name="Id_Jugador" />
+    </Key>
+    <Property Name="Id_Jugador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombres_Jugador" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Apellidos_Jugador" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre_Usuario" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Id_Pais" Type="int" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pass" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Confirm_Pass" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Id_Torneo" Type="int" />
+    <Property Name="Id_Partida" Type="int" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="Id_Pais" />
+    </Key>
+    <Property Name="Id_Pais" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="80" />
+    <Property Name="Abrev" Type="varchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Partida">
+    <Key>
+      <PropertyRef Name="Id_Partida" />
+    </Key>
+    <Property Name="Id_Partida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="20" />
+    <Property Name="Id_Jugador1" Type="int" Nullable="false" />
+    <Property Name="Id_Torneo" Type="int" Nullable="false" />
+    <Property Name="Punteo" Type="int" />
+    <Property Name="Movimiento" Type="int" />
+    <Property Name="Ganador" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Torneo">
+    <Key>
+      <PropertyRef Name="Id_Torneo" />
+    </Key>
+    <Property Name="Id_Torneo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre_Torneo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Fecha_Inic" Type="date" Nullable="false" />
+    <Property Name="Id_Partida" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Bloqueado">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Bloqueo" Type="Self.Bloqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Bloqueo">
+        <PropertyRef Name="Id_Bloqueado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jugador">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Bloqueo" Type="Self.Bloqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Bloqueo">
+        <PropertyRef Name="Id_Jugador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jugador1">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Partida">
+        <PropertyRef Name="Id_Jugador1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pais">
+    <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pais">
+        <PropertyRef Name="Id_Pais" />
+      </Principal>
+      <Dependent Role="Jugador">
+        <PropertyRef Name="Id_Pais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProyectoModelStoreContainer">
+    <EntitySet Name="Bloqueo" EntityType="Self.Bloqueo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Jugador" EntityType="Self.Jugador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Partida" EntityType="Self.Partida" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Torneo" EntityType="Self.Torneo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bloqueado" Association="Self.FK_Bloqueado">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Bloqueo" EntitySet="Bloqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jugador" Association="Self.FK_Jugador">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Bloqueo" EntitySet="Bloqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jugador1" Association="Self.FK_Jugador1">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Partida" EntitySet="Partida" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pais" Association="Self.FK_Pais">
+      <End Role="Pais" EntitySet="Pais" />
+      <End Role="Jugador" EntitySet="Jugador" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

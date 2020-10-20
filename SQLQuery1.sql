@@ -49,7 +49,7 @@ Create Table Partida
 (
 	Id_Partida int identity(1,1) Primary key,
 	Tipo varchar(20)
-		Check(Tipo in('Solitario', 'Multijugador')),
+		Check(Tipo in('Solitario', 'Multijugador','RetroInverso')),
 	Id_Jugador1 int not null,
 	Id_Torneo int not null,
 	Punteo int,
@@ -61,7 +61,6 @@ Create Table Partida
 Truncate Table Jugador;
 select*from Jugador
 select*from Partida
-
 select*from Pais
 
 	

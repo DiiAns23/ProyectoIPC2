@@ -1,0 +1,304 @@
+﻿@model List<Repetido.Models.Modelos.PartidaIndividual>
+@{
+    string title = (string)TempData["title"];
+    string filename = (string)TempData["file"];
+}
+@section Image{
+    '/Public/Image/E.jpg'
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/Content/MyStyles2.css" />
+    <link rel="stylesheet" href="~/Content/MyStyles.css" />
+    <title>@title</title>
+</head>
+<body>
+    <div>@filename</div>
+    <div class="row">
+        @{
+            object negro = "", blanco = "";
+            int negras = 0, blancas = 0;
+            int tirosb = 0, tirosn = 0;
+            string ganador = "";
+            for (int x = 0; x < Model.Count(); x++)
+            {
+                if (Model[x].Color.Equals("black"))
+                {
+                    negras++;
+                }
+                else if (Model[x].Color.Equals("white"))
+                {
+                    blancas++;
+                }
+            }
+            TempData["PunteoBlancas"] = blancas;
+            TempData["PunteoNegras"] = negras;
+            if (TempData["C2"].Equals("white"))
+            {
+                blanco = TempData["J2"];
+                negro = TempData["J1"];
+                TempData["C1"] = "black";
+            }
+            else if (TempData["C2"].Equals("black"))
+            {
+                negro = TempData["J2"];
+                blanco = TempData["J1"];
+                TempData["C1"] = "white";
+            }
+            if (TempData["TirosBlancos"] != null && TempData["TirosNegros"] != null)
+            {
+                tirosb = (int)TempData["TirosBlancos"];
+                tirosn = (int)TempData["TirosNegros"];
+            }
+            if (blancas > negras)
+            {
+                ganador = (string)negro;
+                TempData["Ganador"] = ganador;
+
+            }
+            else if (negras > blancas)
+            {
+                ganador = (string)blanco;
+                TempData["Ganador"] = ganador;
+            }
+            else if (negras == blancas)
+            {
+                ganador = "Empate";
+                TempData["Ganador"] = "Empate";
+            }
+        }
+
+        <!-- Terminara la partida y regresara al menu Jugar mostrando primero los resultados de la misma -->
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content extreme">
+                    <div class="modal-header">
+                        <h2 class="text-white tipo-letra" id="staticBackdropLabel">RESULTADOS</h2>
+                    </div>
+                    @using (Html.BeginForm("TerminarPartida", "Extreme"))
+                    {
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">JUGADOR</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white  tipo-letra">TIROS</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">PUNTEO</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">@negro</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white  tipo-letra">@tirosn</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">@negras</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">@blanco</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white  tipo-letra">@tirosb</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 class="text-white tipo-letra">@blancas</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col"><h2 class="text-white tipo-letra">GANADOR</h2></div>
+                                <div class="col"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col"><h3 class="text-white tipo-letra">@ganador</h3></div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn blue btn-outline-warning">CONTINUAR</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="tablero">
+                <!-- CREACION DEL TABLERO-->
+                @using (Html.BeginForm("Tiro", "Extreme"))
+                {
+                    int numero = 0;
+                    string[] letras = { " ", "A", "B", "C", "D", "E", "F", "G", "H", " " };
+                    <div class="row align-top font-weight-bold">
+                        @for (int i = 0; i < letras.Length; i++)
+                        {
+                            <div class="casilla border-0">@letras[i]</div>
+                        }
+                    </div>
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        var id2 = i + 1;
+                        <div class="fila font-weight-bold">
+                            <div class="casilla">@id2</div>
+                            @for (int j = 0; j < 8; j++)
+                            {
+                                if (Model[numero].Color.Equals("black"))
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas black">
+                                        </button>
+                                    </div>
+                                }
+                                else if (Model[numero].Color == "white")
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas white">
+                                        </button>
+                                    </div>
+
+                                }
+                                else if (Model[numero].Color == "gray")
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas posible" type="submit" value="@numero" name="io">
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="casilla verdecitochido">
+                                        <button class="btn fichas verdecitochido" type="submit" value="@numero" name="io"></button>
+                                    </div>
+                                }
+                                numero++;
+                            }
+                            <div class="casilla border-0">@id2</div>
+                        </div>
+                    }
+                    <div class="row font-weight-bold">
+                        @for (int i = 0; i < letras.Length; i++)
+                        {
+                            <div class="col casilla border-0">@letras[i]</div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col">
+            <!-- CREACION DEL TABLERO DE PUNTEOS, CARGAR Y DESCARGAR PARTIDA-->
+            <div id="tablero2">
+                <div class="row blackExtreme borde1">
+                    @{ string[] punteo = { " ", " ", " ", "P", "U", "N", "T", "E", "O" };
+                        <div class="fila font-weight-bold">
+                            @for (int x = 0; x < punteo.Length; x++)
+                            {
+                                <div class="casilla border-0">@punteo[x]</div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <div class="row" id="posicion">
+                            <div class="col align-content-center">
+                                <div class="fichas2 black">
+                                </div>
+                                <h3 class="text-white tipo-letra">@negro : @tirosn</h3>
+                                <h2 class="text-white">@TempData["TirosNegros"]</h2>
+                            </div>
+                            <div class="col puntaje extreme" id="contenedor">@negras</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row" id="posicion">
+                            <div class="col align-content-center">
+                                <div class="fichas2 white">
+                                </div>
+                                <h3 class="text-white tipo-letra">@blanco : @tirosb</h3>
+                                <h2 class="text-white">@TempData["TirosBlancos"]</h2>
+                            </div>
+                            <div class="col puntaje extreme" id="contenedor">@blancas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row blackExtreme border-0">
+                    @{ string[] turno = { " ", " ", " ", "T", "U", "R", "N", "O" };
+                        <div class="fila font-weight-bold">
+                            @for (int x = 0; x < turno.Length; x++)
+                            {
+                                <div class="casilla border-0">@turno[x]</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row" id="posicion2">
+                            <div class=" align-content-center">
+                                @if (TempData["Color"].Equals("black"))
+                                {
+                                    <div class="fichas2 black"></div>
+                                    TempData["Color"] = "black";
+                                }
+                                else if (TempData["Color"].Equals("white"))
+                                {
+                                    <div class="fichas2 white"></div>
+                                    TempData["Color"] = "white";
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="posicionBotonoes">
+                <div class="row">
+                    <div class="col">
+                        @using (Html.BeginForm("Load", "PantallaPrincipal"))
+                        {
+                            <button class="black text-white tipo-letra btn">Descargar Partida</button>
+                        }
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="black text-white tipo-letra btn" data-toggle="modal" data-target="#staticBackdrop">
+                            Terminar Partida
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <br />
+        <footer>
+            <nav class="navbar fixed-bottom nav navbar-collapse borde-amarillo extreme">
+                <div class="col">
+                    <h1 class=" tipo-letra text-white">OTHELLO</h1>
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+                <div class="col">
+                </div>
+            </nav>
+        </footer>
+    </nav>
+</body>
+</html>

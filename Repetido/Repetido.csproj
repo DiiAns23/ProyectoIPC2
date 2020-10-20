@@ -129,7 +129,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AperturaController.cs" />
     <Compile Include="Controllers\Encrypt.cs" />
+    <Compile Include="Controllers\ExtremeController.cs" />
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PantallaPrincipalController.cs" />
@@ -169,6 +171,7 @@
       <DependentUpon>BaseDatos1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Modelos\PartidaIndividual.cs" />
+    <Compile Include="Models\Modelos\PersonalizadaModel.cs" />
     <Compile Include="Models\Modelos\RegistrarViewModel.cs" />
     <Compile Include="Models\Modelos\sysdiagrams.cs">
       <DependentUpon>BaseDatos1.tt</DependentUpon>
@@ -203,6 +206,7 @@
       <LastGenOutput>BaseDatos1.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Modelos\Modal.js" />
+    <Content Include="Models\Modelos\Timer.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -351,6 +355,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\PantallaPrincipal\Jugador2.cshtml" />
     <Content Include="Views\Local\Individual.cshtml" />
+    <Content Include="Views\Apertura\Personalizada.cshtml" />
+    <Content Include="Views\Apertura\Xtreme.cshtml" />
+    <Content Include="Views\Extreme\RetroInverso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="ProyectoModel.Bloqueo" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ProyectoModel.Jugador" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="ProyectoModel.Pais" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProyectoModel.Partida" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoModel.Partida" Width="1.5" PointX="8" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ProyectoModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ProyectoModel.Torneo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ProyectoModel.FK_Bloqueado" ManuallyRouted="false" />

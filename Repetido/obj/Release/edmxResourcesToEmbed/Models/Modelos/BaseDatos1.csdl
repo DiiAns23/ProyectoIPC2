@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProyectoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Bloqueo">
+    <Key>
+      <PropertyRef Name="Id_Bloqueo" />
+    </Key>
+    <Property Name="Id_Bloqueo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_Jugador" Type="Int32" Nullable="false" />
+    <Property Name="Id_Bloqueado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Jugador" Relationship="Self.FK_Bloqueado" FromRole="Bloqueo" ToRole="Jugador" />
+    <NavigationProperty Name="Jugador1" Relationship="Self.FK_Jugador" FromRole="Bloqueo" ToRole="Jugador" />
+  </EntityType>
+  <EntityType Name="Jugador">
+    <Key>
+      <PropertyRef Name="Id_Jugador" />
+    </Key>
+    <Property Name="Id_Jugador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres_Jugador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos_Jugador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre_Usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Id_Pais" Type="Int32" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Confirm_Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Id_Torneo" Type="Int32" />
+    <Property Name="Id_Partida" Type="Int32" />
+    <NavigationProperty Name="Bloqueo" Relationship="Self.FK_Bloqueado" FromRole="Jugador" ToRole="Bloqueo" />
+    <NavigationProperty Name="Bloqueo1" Relationship="Self.FK_Jugador" FromRole="Jugador" ToRole="Bloqueo" />
+    <NavigationProperty Name="Partida" Relationship="Self.FK_Jugador1" FromRole="Jugador" ToRole="Partida" />
+    <NavigationProperty Name="Pais" Relationship="Self.FK_Pais" FromRole="Jugador" ToRole="Pais" />
+  </EntityType>
+  <EntityType Name="Pais">
+    <Key>
+      <PropertyRef Name="Id_Pais" />
+    </Key>
+    <Property Name="Id_Pais" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="Abrev" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Jugador" Relationship="Self.FK_Pais" FromRole="Pais" ToRole="Jugador" />
+  </EntityType>
+  <EntityType Name="Partida">
+    <Key>
+      <PropertyRef Name="Id_Partida" />
+    </Key>
+    <Property Name="Id_Partida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Jugador1" Type="Int32" Nullable="false" />
+    <Property Name="Id_Torneo" Type="Int32" Nullable="false" />
+    <Property Name="Punteo" Type="Int32" />
+    <Property Name="Movimiento" Type="Int32" />
+    <Property Name="Ganador" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Jugador" Relationship="Self.FK_Jugador1" FromRole="Partida" ToRole="Jugador" />
+    <NavigationProperty Name="Torneo" Relationship="Self.FK_Torneo" FromRole="Partida" ToRole="Torneo" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Torneo">
+    <Key>
+      <PropertyRef Name="Id_Torneo" />
+    </Key>
+    <Property Name="Id_Torneo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre_Torneo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fecha_Inic" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Id_Partida" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Partida" Relationship="Self.FK_Torneo" FromRole="Torneo" ToRole="Partida" />
+  </EntityType>
+  <Association Name="FK_Bloqueado">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Bloqueo" Type="Self.Bloqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Bloqueo">
+        <PropertyRef Name="Id_Bloqueado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jugador">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Bloqueo" Type="Self.Bloqueo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Bloqueo">
+        <PropertyRef Name="Id_Jugador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Jugador1">
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="1" />
+    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jugador">
+        <PropertyRef Name="Id_Jugador" />
+      </Principal>
+      <Dependent Role="Partida">
+        <PropertyRef Name="Id_Jugador1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pais">
+    <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+    <End Role="Jugador" Type="Self.Jugador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pais">
+        <PropertyRef Name="Id_Pais" />
+      </Principal>
+      <Dependent Role="Jugador">
+        <PropertyRef Name="Id_Pais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Torneo">
+    <End Role="Torneo" Type="Self.Torneo" Multiplicity="1" />
+    <End Role="Partida" Type="Self.Partida" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Torneo">
+        <PropertyRef Name="Id_Torneo" />
+      </Principal>
+      <Dependent Role="Partida">
+        <PropertyRef Name="Id_Torneo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BaseDatos2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bloqueo" EntityType="Self.Bloqueo" />
+    <EntitySet Name="Jugador" EntityType="Self.Jugador" />
+    <EntitySet Name="Pais" EntityType="Self.Pais" />
+    <EntitySet Name="Partida" EntityType="Self.Partida" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Torneo" EntityType="Self.Torneo" />
+    <AssociationSet Name="FK_Bloqueado" Association="Self.FK_Bloqueado">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Bloqueo" EntitySet="Bloqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jugador" Association="Self.FK_Jugador">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Bloqueo" EntitySet="Bloqueo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Jugador1" Association="Self.FK_Jugador1">
+      <End Role="Jugador" EntitySet="Jugador" />
+      <End Role="Partida" EntitySet="Partida" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pais" Association="Self.FK_Pais">
+      <End Role="Pais" EntitySet="Pais" />
+      <End Role="Jugador" EntitySet="Jugador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Torneo" Association="Self.FK_Torneo">
+      <End Role="Torneo" EntitySet="Torneo" />
+      <End Role="Partida" EntitySet="Partida" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

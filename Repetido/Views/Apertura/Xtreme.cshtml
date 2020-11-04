@@ -1,0 +1,284 @@
+﻿@model Repetido.Models.Modelos.TableroDinamico
+@{
+    ViewBag.Title = "Xtreme";
+}
+@section Image{
+    '/Public/Image/E.jpg'
+}
+@{
+    List<int> listacolumnas = new List<int>();
+    List<string> listaModos = new List<string>();
+    List<string> listaColor = new List<string>();
+    listaModos.Add("Normal");
+    listaModos.Add("RetroInverso");
+    listaColor.Add("Blanco");
+    listaColor.Add("Negro");
+    int a = 6;
+    for (int x = 0; x < 8; x++)
+    {
+        listacolumnas.Add(a);
+        a = a + 2;
+    }
+}
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/Content/MyStyles.css" />
+    <link rel="stylesheet" href="~/Content/MyStyles2.css" />
+
+</head>
+<body>
+    <header>
+        <nav class="btn navbar float-right letra-negra align-content-lg-center">
+            <a href="~/PantallaPrincipal/PantallaPrincipal" class="letra-negra"><div class="boton-atras black">X</div></a>
+        </nav>
+    </header>
+    <header>
+        <!-- Modal Apertuda Personalizada-->
+        <div class="modal fade" id="Personalizada" tabindex="-1" role="dialog" aria-labelledby="Cargar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content extreme tipo-letra text-white">
+                    <div class="modal-header">
+                        <div class="col">
+                            <h4 class="modal-title align-content-center" id="exampleModalLongTitle">Colores @User.Identity.Name</h4>
+                        </div>
+                        <div class="col">
+                            <h4 class="modal-title align-content-center" id="exampleModalLongTitle">Colores Invitado</h4>
+                        </div>
+                        <button class="close posible" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @using (Html.BeginForm("Personalizada", "Apertura"))
+                    {
+                        <form method="post">
+                            <div class="modal-body">
+                                <div class="row">
+                                    @{string[] colores = { "Negro", "Blanco", "Rojo", "Cafe", "Anaranjado", "Magenta", "Verde", "Celeste", "Amarillo", "Azul" };
+
+                                        <div class=" col">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <div class="row align-content-left">
+                                                    <div class="col">
+                                                        <h5 class="tipo-letra">@colores[i]</h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="radio" name=@colores[i] value=@colores[i] />
+                                                    </div>
+                                                    <div class="col">
+                                                        <h5 class="tipo-letra">@colores[i + 5]</h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="radio" name=@colores[i+5] value=@colores[i+5] />
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>  
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn black tipo-letra text-white">ACEPTAR</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Modal MultiPlayer RetroInverso -->
+        <div class="modal fade" id="RetroInverso" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content extreme tipo-letra text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title align-content-center" id="exampleModalLongTitle">JUGADOR 2</h5>
+                        <button class="close red redondear" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @using (Html.BeginForm("RetroInverso", "Extreme", FormMethod.Post))
+                    {<form method="post">
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label> NOMBRE: </label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control" name="nombre" placeholder="Jugador 2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label> COLOR: </label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Blanco</label>
+                                                <input type="radio" name="color" value="Blanco" />
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Negro</label>
+                                                <input type="radio" name="color" value="Negro" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                    </div>
+
+                                    <div class="col">
+                                        <button type="submit" class="btn black tipo-letra text-white">ACEPTAR</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Modal MultiPlayer Tablero Dinamico -->
+        <div class="modal fade" id="TableroD" tabindex="-1" role="dialog" aria-labelledby="Cargar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content extreme tipo-letra text-white">
+                    <div class="modal-header">
+                        <h2 class="modal-title align-content-center" id="exampleModalLongTitle">Tablero Dinámico</h2>
+                        <button class="close posible" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @using (Html.BeginForm("Tablero", "TableroDinamico"))
+                    {
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    @Html.LabelFor(dato => dato.columnas, "Columnas")
+                                    <select class="form-control" data-val="true" id="columnas" name="columnas">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach (var y in listacolumnas)
+                                        {
+                                            <option value="@y">@y</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    @Html.LabelFor(dato => dato.filas, "Filas")
+                                    <select class="form-control" data-val="true" id="filas" name="filas">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach (var y in listacolumnas)
+                                        {
+                                            <option value="@y">@y</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col align-content-center">
+                                    @Html.LabelFor(dato => dato.modo, "Modo de Juego")
+                                    <select class="form-control" data-val="true" id="modo" name="modo">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach (var y in listaModos)
+                                        {
+                                            <option value="@y">@y</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col align-content-center">
+                                    @Html.LabelFor(dato => dato.jugador2, "Segundo Jugador")
+                                    @Html.TextBoxFor(dato => dato.jugador2, "", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm"></div>
+                                <div class="col align-content-center">
+                                    @Html.LabelFor(dato => dato.colorj2, "Color Segundo Jugador")
+                                    <select class="form-control" data-val="true" id="colorj2" name="colorj2">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach (var y in listaColor)
+                                        {
+                                            <option value="@y">@y</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-sm"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn bg-primary tipo-letra text-white">ACEPTAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-content-lg-center justify-content-center" style="height:60vh">
+            <div class="col col-sm-4">
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div>
+                    <button class="btn btn-block black redondear btn-outline-warning" data-toggle="modal" data-target="#RetroInverso"><h2 class="text-white align-content-center ">RETROINVERSO</h2></button>
+                </div>
+                <br />
+                <br />
+                <div>
+                    <button class="btn btn-block black redondear btn-outline-warning" data-toggle="modal" data-target="#Personalizada"><h2 class="text-white align-content-center ">PERSONALIZADA</h2></button>
+                </div>
+                <br />
+                <br />
+                <div>
+                    <button class="btn btn-block black redondear btn-outline-warning" data-toggle="modal" data-target="#TableroD"><h2 class="text-white align-content-center ">TABLERO DINÁMICO</h2></button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav>
+        <br />
+        <footer>
+            <nav class="navbar fixed-bottom nav navbar-collapse borde-amarillo extreme">
+                <div class="col">
+                    <h1 class=" tipo-letra text-white">OTHELLO</h1>
+                </div>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">JUGAR</h1>
+                </div>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">TORNEOS</h1>
+                </div>
+                <div class="col">
+                    <h1 class="align-content-left tipo-letra text-white">HISTORIAL</h1>
+                </div>
+            </nav>
+        </footer>
+    </nav>
+</body>
+
+

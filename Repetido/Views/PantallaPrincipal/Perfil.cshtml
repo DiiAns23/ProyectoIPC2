@@ -1,0 +1,81 @@
+﻿@model List<Repetido.Models.Modelos.PerfilUsuario>
+@{
+    ViewBag.Title = "Perfil";
+}
+@section Image{
+    '/Public/Image/E.jpg'
+}
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="~/Content/MyStyles.css" />
+    <link rel="stylesheet" href="~/Content/MyStyles2.css" />
+</head>
+<body>
+    <header>
+        <div class="btn navbar float-right letra-negra align-content-lg-center">
+            <a href="~/PantallaPrincipal/PantallaPrincipal" class="letra-negra"><div class="boton-atras black">X</div></a>
+        </div>
+    </header>
+
+    <header>
+        <!-- Modal -->
+        <div>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content blue">
+                    <div class="modal-header black">
+                        <div class="col">
+                            <h2 class="modal-title text-white">Perfil de Usuario   </h2>
+                        </div>
+                        <div class="col">
+                            <h1 class="modal-title text-danger">@TempData["Usuario"]</h1>
+                        </div>
+                    </div>
+                    <div class="modal-body black">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <h4 class="text-white">Nombres: @TempData["Nombres"]</h4>
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-white">Apellidos: @TempData["Apellidos"]</h4>
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-white">Correo: @TempData["Correo"]</h4>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <h4 class="text-white">Partidas Ganadas: @TempData["Ganadas"]</h4>
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-white">Partidas Perdidas: @TempData["Perdidas"]</h4>
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-white">Partidas Empatadas: @TempData["Empatadas"]</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer black">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav>
+    <br />
+    <footer>
+        <nav class="navbar fixed-bottom nav navbar-collapse borde-amarillo extreme">
+            <div class="col">
+                <h1 class=" tipo-letra text-white">OTHELLO</h1>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </nav>
+    </footer>
+    </nav>
+</body>

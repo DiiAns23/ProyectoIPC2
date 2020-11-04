@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProyectoModelStoreContainer" CdmEntityContainer="BaseDatos2">
+    <EntitySetMapping Name="Bloqueo">
+      <EntityTypeMapping TypeName="ProyectoModel.Bloqueo">
+        <MappingFragment StoreEntitySet="Bloqueo">
+          <ScalarProperty Name="Id_Bloqueo" ColumnName="Id_Bloqueo" />
+          <ScalarProperty Name="Id_Jugador" ColumnName="Id_Jugador" />
+          <ScalarProperty Name="Id_Bloqueado" ColumnName="Id_Bloqueado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jugador">
+      <EntityTypeMapping TypeName="ProyectoModel.Jugador">
+        <MappingFragment StoreEntitySet="Jugador">
+          <ScalarProperty Name="Id_Jugador" ColumnName="Id_Jugador" />
+          <ScalarProperty Name="Nombres_Jugador" ColumnName="Nombres_Jugador" />
+          <ScalarProperty Name="Apellidos_Jugador" ColumnName="Apellidos_Jugador" />
+          <ScalarProperty Name="Nombre_Usuario" ColumnName="Nombre_Usuario" />
+          <ScalarProperty Name="Id_Pais" ColumnName="Id_Pais" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="Confirm_Pass" ColumnName="Confirm_Pass" />
+          <ScalarProperty Name="Id_Torneo" ColumnName="Id_Torneo" />
+          <ScalarProperty Name="Id_Partida" ColumnName="Id_Partida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pais">
+      <EntityTypeMapping TypeName="ProyectoModel.Pais">
+        <MappingFragment StoreEntitySet="Pais">
+          <ScalarProperty Name="Id_Pais" ColumnName="Id_Pais" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Abrev" ColumnName="Abrev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Partida">
+      <EntityTypeMapping TypeName="ProyectoModel.Partida">
+        <MappingFragment StoreEntitySet="Partida">
+          <ScalarProperty Name="Id_Partida" ColumnName="Id_Partida" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Id_Jugador1" ColumnName="Id_Jugador1" />
+          <ScalarProperty Name="Id_Torneo" ColumnName="Id_Torneo" />
+          <ScalarProperty Name="Punteo" ColumnName="Punteo" />
+          <ScalarProperty Name="Movimiento" ColumnName="Movimiento" />
+          <ScalarProperty Name="Ganador" ColumnName="Ganador" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ProyectoModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Torneo">
+      <EntityTypeMapping TypeName="ProyectoModel.Torneo">
+        <MappingFragment StoreEntitySet="Torneo">
+          <ScalarProperty Name="Id_Torneo" ColumnName="Id_Torneo" />
+          <ScalarProperty Name="Nombre_Torneo" ColumnName="Nombre_Torneo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Fecha_Inic" ColumnName="Fecha_Inic" />
+          <ScalarProperty Name="Id_Partida" ColumnName="Id_Partida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

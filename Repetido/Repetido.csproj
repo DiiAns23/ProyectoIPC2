@@ -129,8 +129,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AperturaController.cs" />
-    <Compile Include="Controllers\Encrypt.cs" />
     <Compile Include="Controllers\ExtremeController.cs" />
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -359,11 +357,11 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\PantallaPrincipal\Jugador2.cshtml" />
     <Content Include="Views\Local\Individual.cshtml" />
-    <Content Include="Views\Apertura\Personalizada.cshtml" />
-    <Content Include="Views\Apertura\Xtreme.cshtml" />
+    <Content Include="Views\TableroDinamico\Xtreme.cshtml" />
     <Content Include="Views\Extreme\RetroInverso.cshtml" />
     <Content Include="Views\PantallaPrincipal\Perfil.cshtml" />
     <Content Include="Views\TableroDinamico\Tablero.cshtml" />
+    <Content Include="Views\TableroDinamico\Apertura.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,6 +28,11 @@ namespace Repetido.Controllers
         static int columnas = 0, filas = 0;
         public static int color1 = 0, color2 = 0;
         static string[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T" };
+
+        public ActionResult Xtreme()
+        {
+            return View();
+        }
         public ActionResult Tablero()
         {
             return View();
@@ -35,6 +40,10 @@ namespace Repetido.Controllers
         [HttpPost]
         public ActionResult Tablero(TableroDinamico datos)
         {
+            listaC.Clear();
+            listaT.Clear();
+            listaColores1.Clear();
+            listaColores2.Clear();
             string nombre = datos.jugador2;
             string color = datos.colorj2;
             columnas = datos.columnas;
@@ -316,10 +325,15 @@ namespace Repetido.Controllers
         public ActionResult Personalizada(string Negro, string Blanco, string Rojo, string Gris, string Anaranjado,
             string Violeta, string Verde, string Celeste, string Amarillo, string Azul, int fil, int col)
         {
+            listaC.Clear();
+            listaT.Clear();
+            listaColores1.Clear();
+            listaColores2.Clear();
             if (Negro == null && Blanco == null && Rojo == null && Gris == null && Anaranjado == null && Violeta == null
                 && Verde == null && Celeste == null && Amarillo == null && Azul == null)
             {
-                return RedirectToAction("Jugar", "Pantallaprincipal");
+                listaColores1.Add("negro");
+                listaColores2.Add("blanco");
             }
             else
             {
@@ -397,6 +411,15 @@ namespace Repetido.Controllers
             ViewBag.Colores2 = listaColores2;
             return View("Tablero", listaT);
         }
+
+        public ActionResult TerminarPartida()
+        {
+            listaC.Clear();
+            listaT.Clear();
+            listaColores1.Clear();
+            listaColores2.Clear();
+            return RedirectToAction("Xtreme", "TableroDinamico");
+        }
         public int j1()
         {
             if (color1 < listaColores1.Count - 1)
@@ -420,6 +443,75 @@ namespace Repetido.Controllers
                 color2 = 0;
             }
             return color2;
+        }
+
+        public Boolean RevisarArriba(string ficha2)
+        {
+            char []fichados = ficha2.ToCharArray();
+            string fila = fichados[0].ToString();
+            int filados = BuscarFila(fila);
+            int columna = (int)fichados[1];
+            if (TempData["Turno"].Equals("J1"))
+            {
+                if (recorrerColores1(ficha2) == true)
+                {
+                    while (filados >= 0)
+                    {
+                    }
+                }
+                
+            }
+            else
+            {
+
+            }
+            return false;
+        }
+        public bool recorrerColores1(string color)
+        {
+            for(int x = 0; x<listaColores1.Count(); x++)
+            {
+                if(listaColores1[x].Equals(color))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int BuscarFila(string fila2)
+        {
+            for (int x = 0; x < letras.Length; x++)
+            {
+                if (letras[x].Equals(fila2))
+                {
+                    return x;
+                }
+            }
+            return 0;
+        }
+        public Boolean recorrerColores2(string color)
+        {
+            for (int x = 0; x < listaColores2.Count(); x++)
+            {
+                if (listaColores2[x].Equals(color))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int BuscarPosicion(string ficha)
+        {
+            for (int x = 0; x < listaT.Count(); x++)
+            {
+                if (listaT[x].index == ficha)
+                {
+                    return x;
+                }
+            }
+            return 0;
         }
 
     }

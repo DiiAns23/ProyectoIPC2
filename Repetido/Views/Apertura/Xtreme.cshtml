@@ -48,12 +48,12 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    @using (Html.BeginForm("Personalizada", "Apertura"))
+                    @using (Html.BeginForm("Personalizada", "TableroDinamico"))
                     {
                         <form method="post">
                             <div class="modal-body">
                                 <div class="row">
-                                    @{string[] colores = { "Negro", "Blanco", "Rojo", "Cafe", "Anaranjado", "Magenta", "Verde", "Celeste", "Amarillo", "Azul" };
+                                    @{string[] colores = { "Negro", "Blanco", "Rojo", "Gris", "Anaranjado", "Violeta", "Verde", "Celeste", "Amarillo", "Azul" };
 
                                         <div class=" col">
                                             @for (int i = 0; i < 5; i++)
@@ -74,9 +74,33 @@
                                                 </div>
                                             }
                                         </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col">
+                                                <h2>Columnas</h2>
+                                                <select class="form-control" data-val="true" id="columnas" name="col">
+                                                    <option value="">Seleccione uno</option>
+                                                    @foreach (var y in listacolumnas)
+                                                    {
+                                                        <option value="@y">@y</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <h2>Filas</h2>
+                                                <select class="form-control" data-val="true" id="filas" name="fil">
+                                                    <option value="">Seleccione uno</option>
+                                                    @foreach (var y in listacolumnas)
+                                                    {
+                                                        <option value="@y">@y</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br />
                                     }
                                 </div>
-                            </div>  
+                            </div>
                             <div class="modal-footer">
                                 <div class="row">
                                     <div class="col">
@@ -236,6 +260,71 @@
                 </div>
             </div>
         </div>
+        <!--Modal Cargar-->
+        <div class="modal fade" id="Cargar" tabindex="-1" role="dialog" aria-labelledby="Cargar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content coffe tipo-letra text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title align-content-center" id="exampleModalLongTitle">JUGADOR 2</h5>
+                        <button class="close red redondear" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @using (Html.BeginForm("Upload", "TableroDinamico", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <form method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label>NOMBRE: </label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input class="form-control" name="nombre" placeholder="Jugador 2" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <label>COLOR: </label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Blanco</label>
+                                                <input type="radio" name="color2" value="Blanco" />
+                                            </div>
+                                            <div class="col">
+                                                <label class="text-white tipo-letra">Negro</label>
+                                                <input type="radio" name="color2" value="Negro" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="form-control verdecitochido btn-block" type="file" name="path" accept=".xml" />
+                                        </div>
+                                        <div class="col">
+                                        </div>
+                                        <div class="col"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn red tipo-letra text-white " data-dismiss="modal">CERRRAR</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn blue tipo-letra text-white">ACEPTAR</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
 
         <div class="row align-content-lg-center justify-content-center" style="height:60vh">
             <div class="col col-sm-4">
@@ -257,6 +346,12 @@
                 <div>
                     <button class="btn btn-block black redondear btn-outline-warning" data-toggle="modal" data-target="#TableroD"><h2 class="text-white align-content-center ">TABLERO DINÁMICO</h2></button>
                 </div>
+                <br />
+                <br />
+                <div>
+                    <button class="btn btn-block black redondear btn-outline-warning" data-toggle="modal" data-target="#Cargar"><h2 class="text-white align-content-center ">CARGAR PARTIDA</h2></button>
+                </div>
+                <br />
             </div>
         </div>
     </header>

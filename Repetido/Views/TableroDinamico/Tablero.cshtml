@@ -14,28 +14,28 @@
     int columnas = (int)TempData["Columnas"];
     for (int x = 0; x < Model.Count(); x++)
     {
-        if (Model[x].Color.Equals("black"))
+        if (Model[x].Color.Equals("negro"))
         {
             negras++;
         }
-        else if (Model[x].Color.Equals("white"))
+        else if (Model[x].Color.Equals("blanco"))
         {
             blancas++;
         }
     }
     TempData["PunteoBlancas"] = blancas;
     TempData["PunteoNegras"] = negras;
-    if (TempData["C2"].Equals("white"))
+    if (TempData["C2"].Equals("blanco"))
     {
         blanco = TempData["J2"];
         negro = TempData["J1"];
-        TempData["C1"] = "black";
+        TempData["C1"] = "negro";
     }
-    else if (TempData["C2"].Equals("black"))
+    else if (TempData["C2"].Equals("negro"))
     {
         negro = TempData["J2"];
         blanco = TempData["J1"];
-        TempData["C1"] = "white";
+        TempData["C1"] = "blanco";
     }
     if (TempData["TirosBlancos"] != null && TempData["TirosNegros"] != null)
     {
@@ -58,7 +58,8 @@
         TempData["Ganador"] = "Empate";
     }
 }
-<h2>Al menos estas leyendo bien los datos :3</h2>
+<br />
+<br />
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,51 +137,114 @@
                 <div class="col">
                     <div class="row black">
                         <!-- CREACION DEL TABLERO-->
-                        @using (Html.BeginForm("Tablero", "TableroDinamico"))
+                        @using (Html.BeginForm("Tiro", "TableroDinamico"))
                         {
                             int numero = 0;
                             string[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T" };
-                            <div class="row ">
+                            <div class="row align-top font-weight-bold">
                                 <div class="col casilla border-0"> </div>
                                 @for (int i = 0; i < columnas; i++)
                                 {
-                                    <div class="col casilla">@letras[i]</div>
+                                    <div class="col casilla border-0">@letras[i]</div>
                                 }
-                                <div class="col casilla"> </div>
+                                <div class="col casilla border-0"> </div>
                             </div>
 
                             for (int i = 0; i < filas; i++)
                             {
                                 var id2 = i + 1;
                                 <div class="row fila font-weight-bold">
-                                    <div class="col casilla">@id2</div>
+                                    <div class="col casilla border-0">@id2</div>
                                     @for (int j = 0; j < columnas; j++)
                                     {
-                                        if (Model[numero].Color.Equals("black"))
+                                        string posicion = letras[j];
+                                        int a = i + 1;
+                                        string b = a.ToString();
+                                        posicion = posicion + b;
+                                        if (Model[numero].Color.Equals("rojo"))
                                         {
                                             <div class="col casilla verdecitochido">
-                                                <div class="btn fichas black">
+                                                <div class="btn fichas red">
                                                 </div>
                                             </div>
                                         }
-                                        else if (Model[numero].Color == "white")
+                                        else if (Model[numero].Color == "amarillo")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas yellow">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "azul")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas blue">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "anaranjado")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas orange">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "verde")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas green2">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "violeta")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas magenta">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "blanco")
                                         {
                                             <div class="col casilla verdecitochido">
                                                 <div class="btn fichas white">
                                                 </div>
                                             </div>
+
                                         }
-                                        else if (Model[numero].Color == "gray")
+                                        else if (Model[numero].Color == "negro")
                                         {
                                             <div class="col casilla verdecitochido">
-                                                <button class="btn fichas posible" type="submit" value="@numero" name="io">
-                                                </button>
+                                                <div class="btn fichas black">
+                                                </div>
                                             </div>
+
+                                        }
+                                        else if (Model[numero].Color == "celeste")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas skyblue">
+                                                </div>
+                                            </div>
+
+                                        }
+                                        else if (Model[numero].Color == "gris")
+                                        {
+                                            <div class="col casilla verdecitochido">
+                                                <div class="btn fichas posible">
+                                                </div>
+                                            </div>
+
                                         }
                                         else
                                         {
                                             <div class="col casilla verdecitochido">
-                                                <div class="verdecitochido"></div>
+                                                <button class="btn fichas verdecitochido" type="submit" value="@posicion" name="ficha">
+                                                </button>
                                             </div>
                                         }
                                         numero++;
@@ -202,88 +266,197 @@
             </div>
         </div>
         <div class="col">
-            <div class="row">
-                <div class="col">
+            <div class="col">
+                <!-- CREACION DEL TABLERO DE PUNTEOS, CARGAR Y DESCARGAR PARTIDA-->
+                <div id="tablero3">
+                    <div class="row blackExtreme borde1">
+                        @{ string[] punteo = { " ", " ", " ", "P", "U", "N", "T", "E", "O" };
+                            <div class="fila font-weight-bold">
+                                @for (int x = 0; x < punteo.Length; x++)
+                                {
+                                    <div class="casilla border-0">@punteo[x]</div>
+                                }
+                            </div>
+                        }
+                    </div>
                     <div class="row">
-                        <!-- CREACION DEL TABLERO-->
-                        <div class="row">
-                            <div class="row border-0">
-                                @{ string[] punteo = {"P", "U", "N", "T", "E", "O" };
-                                    <div class="fila font-weight-bold">
-                                        @for (int x = 0; x < punteo.Length; x++)
+                        <div class="col">
+                            <div class="row" id="posicion">
+                                <div class="col align-content-center">
+                                    @foreach (var x in ViewBag.Colores1)
+                                    {
+                                        if (x.Equals("negro"))
                                         {
-                                            <div class="casilla border-0">@punteo[x]</div>
+                                            <div class="fichas2 black"></div>
                                         }
-                                    </div>
-                                }
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col align-content-center">
-                                            <div class="fichas2 black">
-                                            </div>
-                                            <h3 class="text-white tipo-letra">@negro : @tirosn</h3>
-                                            <h2 class="text-white">@TempData["TirosNegros"]</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col align-content-center">
-                                            <div class="fichas2 white">
-                                            </div>
-                                            <h3 class="text-white tipo-letra">@blanco : @tirosb</h3>
-                                            <h2 class="text-white">@TempData["TirosBlancos"]</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row border-0">
-                                @{ string[] turno = {"T", "U", "R", "N", "O" };
-                                    <div class="row fila font-weight-bold">
-                                        @for (int x = 0; x < turno.Length; x++)
+                                        else if (x.Equals("blanco"))
                                         {
-                                            <div class="col casilla border-0">@turno[x]</div>
+                                            <div class="fichas2 white"></div>
                                         }
-                                    </div>
-                                }
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class=" align-content-center">
-                                            @if (TempData["Color"].Equals("black"))
-                                            {
-                                                <div class="fichas2 black"></div>
-                                                TempData["Color"] = "black";
-                                            }
-                                            else if (TempData["Color"].Equals("white"))
-                                            {
-                                                <div class="fichas2 white"></div>
-                                                TempData["Color"] = "white";
-                                            }
-                                        </div>
-                                    </div>
+                                        else if (x.Equals("rojo"))
+                                        {
+                                            <div class="fichas2 red"></div>
+                                        }
+                                        else if (x.Equals("verde"))
+                                        {
+                                            <div class="fichas2 green2"></div>
+                                        }
+                                        else if (x.Equals("anaranjado"))
+                                        {
+                                            <div class="fichas2 orange"></div>
+                                        }
+                                        else if (x.Equals("violeta"))
+                                        {
+                                            <div class="fichas2 magenta"></div>
+                                        }
+                                        else if (x.Equals("celeste"))
+                                        {
+                                            <div class="fichas2 skyblue"></div>
+                                        }
+                                        else if (x.Equals("amarillo"))
+                                        {
+                                            <div class="fichas2 yellow"></div>
+                                        }
+                                        else if (x.Equals("azul"))
+                                        {
+                                            <div class="fichas2 blue"></div>
+                                        }
+                                        else if (x.Equals("gris"))
+                                        {
+                                            <div class="fichas2 posible"></div>
+                                        }
+                                    }
+                                    <h3 class="text-white tipo-letra">@User.Identity.Name : @tirosn</h3>
+                                    <h2 class="text-white">@TempData["TirosNegros"]</h2>
                                 </div>
+                                <div class="col puntaje align-content-center extreme" id="contenedor">@negras</div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="row">
-                                <div class="col">
-                                    @using (Html.BeginForm("Load", "PantallaPrincipal"))
+                        <div class="col">
+                            <div class="row" id="posicion">
+                                <div class="col align-content-center">
+                                    @foreach (var x in ViewBag.Colores2)
                                     {
-                                        <button class="black text-white tipo-letra btn">Descargar Partida</button>
+                                        if (x.Equals("negro"))
+                                        {
+                                            <div class="fichas2 black"></div>
+                                        }
+                                        else if (x.Equals("blanco"))
+                                        {
+                                            <div class="fichas2 white"></div>
+                                        }
+                                        else if (x.Equals("rojo"))
+                                        {
+                                            <div class="fichas2 red"></div>
+                                        }
+                                        else if (x.Equals("verde"))
+                                        {
+                                            <div class="fichas2 green2"></div>
+                                        }
+                                        else if (x.Equals("anaranjado"))
+                                        {
+                                            <div class="fichas2 orange"></div>
+                                        }
+                                        else if (x.Equals("violeta"))
+                                        {
+                                            <div class="fichas2 magenta"></div>
+                                        }
+                                        else if (x.Equals("celeste"))
+                                        {
+                                            <div class="fichas2 skyblue"></div>
+                                        }
+                                        else if (x.Equals("amarillo"))
+                                        {
+                                            <div class="fichas2 yellow"></div>
+                                        }
+                                        else if (x.Equals("azul"))
+                                        {
+                                            <div class="fichas2 blue"></div>
+                                        }
+                                        else if (x.Equals("gris"))
+                                        {
+                                            <div class="fichas2 posible"></div>
+                                        }
                                     }
+                                    <h3 class="text-white tipo-letra" style="padding:2px">@blanco : @tirosb</h3>
+                                    <h2 class="text-white">@TempData["TirosBlancos"]</h2>
                                 </div>
-
+                                <div class="col puntaje align-content-center extreme" id="contenedor">@blancas</div>
                             </div>
-                            <br />
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="black text-white tipo-letra btn" data-toggle="modal" data-target="#staticBackdrop">
-                                        Terminar Partida
-                                    </button>
+                        </div>
+                    </div>
+                    <div class="row blackExtreme border-0">
+                        @{ string[] turno = { " ", " ", " ", "T", "U", "R", "N", "O" };
+                            <div class="fila font-weight-bold">
+                                @for (int x = 0; x < turno.Length; x++)
+                                {
+                                    <div class="casilla border-0">@turno[x]</div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row" id="posicion2">
+                                <div class=" align-content-center">
+                                    <div class="col">
+                                        @if (TempData["Color"].Equals("negro"))
+                                        {
+                                            <div class="fichas2 black"></div>
+                                            TempData["Color"] = "black";
+                                        }
+                                        else if (TempData["Color"].Equals("blanco"))
+                                        {
+                                            <div class="fichas2 white"></div>
+                                            TempData["Color"] = "white";
+                                        }
+                                        else if (TempData["Color"].Equals("rojo"))
+                                        {
+                                            <div class="fichas2 red"></div>
+                                            TempData["Color"] = "red";
+                                        }
+                                        else if (TempData["Color"].Equals("verde"))
+                                        {
+                                            <div class="fichas2 green2"></div>
+                                            TempData["Color"] = "verde";
+                                        }
+                                        else if (TempData["Color"].Equals("anaranjado"))
+                                        {
+                                            <div class="fichas2 orange"></div>
+                                            TempData["Color"] = "anaranjado";
+                                        }
+                                        else if (TempData["Color"].Equals("violeta"))
+                                        {
+                                            <div class="fichas2 magenta"></div>
+                                            TempData["Color"] = "violeta";
+                                        }
+                                        else if (TempData["Color"].Equals("celeste"))
+                                        {
+                                            <div class="fichas2 skyblue"></div>
+                                            TempData["Color"] = "celeste";
+                                        }
+                                        else if (TempData["Color"].Equals("amarillo"))
+                                        {
+                                            <div class="fichas2 yellow"></div>
+                                            TempData["Color"] = "amarillo";
+                                        }
+                                        else if (TempData["Color"].Equals("azul"))
+                                        {
+                                            <div class="fichas2 blue"></div>
+                                            TempData["Color"] = "azul";
+                                        }
+                                        else if (TempData["Color"].Equals("gris"))
+                                        {
+                                            <div class="fichas2 posible"></div>
+                                            TempData["Color"] = "gris";
+                                        }
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

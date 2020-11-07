@@ -8,9 +8,9 @@ namespace Repetido.Models.Modelos
 {
     public class TableroDinamicoP
     {
-        public int index { get; set; }
+        public string index { get; set; }
         public string Color { get; set; }
-        public TableroDinamicoP(int indice, string colorf = "")
+        public TableroDinamicoP(string indice, string colorf = "")
         {
             index = indice;
             Color = colorf;

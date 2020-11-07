@@ -37,7 +37,7 @@
     font-family: times;
 }
 .orange {
-    background: linear-gradient(90deg, rgba(255,122,16,1) 0%, rgba(255,135,0,1) 48%, rgba(255,118,0,1) 100%);
+    background: #FF5733;
     font: white;
     font-family: times;
 }
@@ -132,7 +132,6 @@
     height: 50px;
     float: left;
     font-size: 3em;
-    text-align: center;
     color: white;
     font-family: times;
     border: black 0.5px solid;
@@ -189,6 +188,15 @@
     position: absolute;
     top: 50px;
     left: 700px;
+    width: 600px;
+    height: 350px;
+}
+#tablero3 {
+    border-radius: 50px;
+    background: gray;
+    position: absolute;
+    top: 50px;
+    right: 50px ;
     width: 600px;
     height: 350px;
 }

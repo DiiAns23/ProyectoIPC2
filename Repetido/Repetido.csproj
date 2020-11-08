@@ -129,6 +129,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Controllers\AperturaController.cs" />
+    <Compile Include="Controllers\Encrypt.cs" />
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
     <Compile Include="Controllers\ExtremeController.cs" />
     <Compile Include="Controllers\LocalController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -170,7 +175,10 @@
       <DependentUpon>BaseDatos1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Modelos\PartidaIndividual.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Modelos\PerfilUsuario.cs" />
+=======
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
     <Compile Include="Models\Modelos\PersonalizadaModel.cs" />
     <Compile Include="Models\Modelos\RegistrarViewModel.cs" />
     <Compile Include="Models\Modelos\sysdiagrams.cs">
@@ -357,11 +365,17 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\PantallaPrincipal\Jugador2.cshtml" />
     <Content Include="Views\Local\Individual.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\TableroDinamico\Xtreme.cshtml" />
     <Content Include="Views\Extreme\RetroInverso.cshtml" />
     <Content Include="Views\PantallaPrincipal\Perfil.cshtml" />
     <Content Include="Views\TableroDinamico\Tablero.cshtml" />
     <Content Include="Views\TableroDinamico\Apertura.cshtml" />
+=======
+    <Content Include="Views\Apertura\Personalizada.cshtml" />
+    <Content Include="Views\Apertura\Xtreme.cshtml" />
+    <Content Include="Views\Extreme\RetroInverso.cshtml" />
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

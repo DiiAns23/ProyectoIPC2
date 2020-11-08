@@ -37,7 +37,11 @@
     font-family: times;
 }
 .orange {
+<<<<<<< HEAD
     background: #FF5733;
+=======
+    background: linear-gradient(90deg, rgba(255,122,16,1) 0%, rgba(255,135,0,1) 48%, rgba(255,118,0,1) 100%);
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
     font: white;
     font-family: times;
 }
@@ -233,6 +237,7 @@ button.btn:active{
 }
 #footer {
     width: 100px;
+<<<<<<< HEAD
 }
 
 #Tablero {
@@ -244,6 +249,19 @@ button.btn:active{
     justify-content: center;
 }
 
+=======
+}
+
+#Tablero {
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
 .fila {
     padding: 0px;
 }

@@ -16,7 +16,10 @@ namespace Repetido.Controllers
         static string C1 = "";
         static string J2 = "";
         static string C2 = "";
+<<<<<<< HEAD
         static bool respuesta, fin = false;
+=======
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
         static int TirosNegros = 0;
         static int TirosBlancos = 0;
         public ActionResult RetroInverso()

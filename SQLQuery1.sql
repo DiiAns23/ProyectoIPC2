@@ -61,6 +61,10 @@ Create Table Partida
 Truncate Table Jugador;
 select*from Jugador
 select*from Partida
+<<<<<<< HEAD
 select*from Pais	
+=======
+select*from Pais
+>>>>>>> e856601fc95f0bac20a0f92c0280f217e235814e
 
 	
